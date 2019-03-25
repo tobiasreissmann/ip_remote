@@ -7,8 +7,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch: Colors.blue,
         brightness: Brightness.dark,
+        accentColor: Colors.blue[700],
       ),
       home: MyHomePage(),
     );
@@ -21,9 +22,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Wlads IoT Lampe'),
       ),
@@ -41,13 +45,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 ButtonTheme(
                   minWidth: 200,
                   height: 70,
-                  buttonColor: Colors.blue[200],
+                  buttonColor: Colors.indigo,
                   child: RaisedButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+                    elevation: 9,
                     child: Text(
                       'SwitchBright',
                       style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
                     ),
-                    onPressed: () => print('Wlad'),
+                    onPressed: () => _scaffoldKey.currentState.showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'feedbackMessage',
+                            ),
+                          ),
+                        ),
                   ),
                 ),
                 Padding(
@@ -56,8 +68,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ButtonTheme(
                   minWidth: 200,
                   height: 70,
-                  buttonColor: Colors.blue[200],
+                  buttonColor: Colors.indigo,
                   child: RaisedButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+                    elevation: 9,
                     child: Text(
                       'Ausschalten',
                       style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
@@ -71,8 +85,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ButtonTheme(
                   minWidth: 200,
                   height: 70,
-                  buttonColor: Colors.blue[200],
+                  buttonColor: Colors.indigo,
                   child: RaisedButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+                    elevation: 9,
                     child: Text(
                       'Regenbogen',
                       style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
@@ -86,8 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ButtonTheme(
                   minWidth: 200,
                   height: 70,
-                  buttonColor: Colors.blue[200],
+                  buttonColor: Colors.indigo,
                   child: RaisedButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+                    elevation: 9,
                     child: Text(
                       'Weiß',
                       style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
@@ -101,8 +119,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ButtonTheme(
                   minWidth: 200,
                   height: 70,
-                  buttonColor: Colors.blue[200],
+                  buttonColor: Colors.indigo,
                   child: RaisedButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+                    elevation: 9,
                     child: Text(
                       'Diverses',
                       style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
