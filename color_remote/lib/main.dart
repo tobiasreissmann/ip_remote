@@ -6,57 +6,114 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
+        brightness: Brightness.dark,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Wlads IoT Lampe'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        child: ListView(
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(16),
+                ),
+                ButtonTheme(
+                  minWidth: 200,
+                  height: 70,
+                  buttonColor: Colors.blue[200],
+                  child: RaisedButton(
+                    child: Text(
+                      'SwitchBright',
+                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
+                    ),
+                    onPressed: () => print('Wlad'),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                ),
+                ButtonTheme(
+                  minWidth: 200,
+                  height: 70,
+                  buttonColor: Colors.blue[200],
+                  child: RaisedButton(
+                    child: Text(
+                      'Ausschalten',
+                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
+                    ),
+                    onPressed: () => print('Wlad'),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                ),
+                ButtonTheme(
+                  minWidth: 200,
+                  height: 70,
+                  buttonColor: Colors.blue[200],
+                  child: RaisedButton(
+                    child: Text(
+                      'Regenbogen',
+                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
+                    ),
+                    onPressed: () => print('Wlad'),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                ),
+                ButtonTheme(
+                  minWidth: 200,
+                  height: 70,
+                  buttonColor: Colors.blue[200],
+                  child: RaisedButton(
+                    child: Text(
+                      'Weiß',
+                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
+                    ),
+                    onPressed: () => print('Wlad'),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                ),
+                ButtonTheme(
+                  minWidth: 200,
+                  height: 70,
+                  buttonColor: Colors.blue[200],
+                  child: RaisedButton(
+                    child: Text(
+                      'Diverses',
+                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
+                    ),
+                    onPressed: () => print('Wlad'),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
     );
   }
