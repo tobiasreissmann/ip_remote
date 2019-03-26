@@ -1,4 +1,4 @@
-import 'package:color_remote/light_page.dart';
+import 'package:color_remote/gui/light_page.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
