@@ -1,3 +1,4 @@
+import 'package:color_remote/light_page.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -7,9 +8,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
         brightness: Brightness.dark,
-        accentColor: Colors.blue[700],
+        accentColor: Colors.indigo,
       ),
       home: MyHomePage(),
     );
@@ -26,112 +27,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text('Wlads IoT Lampe'),
-      ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        child: ListView(
+    return DefaultTabController(
+      length: 2,
+      initialIndex: 0,
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          title: Text('Wlads IoT Lampe'),
+          bottom: TabBar(
+            tabs: <Widget>[
+              Tab(icon: Icon(Icons.lightbulb_outline)),
+              Tab(icon: Icon(Icons.settings)),
+            ],
+          ),
+        ),
+        body: TabBarView(
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(16),
-                ),
-                ButtonTheme(
-                  minWidth: 200,
-                  height: 70,
-                  buttonColor: Colors.indigo,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
-                    elevation: 9,
-                    child: Text(
-                      'SwitchBright',
-                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
-                    ),
-                    onPressed: () => _scaffoldKey.currentState.showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'feedbackMessage',
-                            ),
-                          ),
-                        ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8),
-                ),
-                ButtonTheme(
-                  minWidth: 200,
-                  height: 70,
-                  buttonColor: Colors.indigo,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
-                    elevation: 9,
-                    child: Text(
-                      'Ausschalten',
-                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
-                    ),
-                    onPressed: () => print('Wlad'),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8),
-                ),
-                ButtonTheme(
-                  minWidth: 200,
-                  height: 70,
-                  buttonColor: Colors.indigo,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
-                    elevation: 9,
-                    child: Text(
-                      'Regenbogen',
-                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
-                    ),
-                    onPressed: () => print('Wlad'),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8),
-                ),
-                ButtonTheme(
-                  minWidth: 200,
-                  height: 70,
-                  buttonColor: Colors.indigo,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
-                    elevation: 9,
-                    child: Text(
-                      'Weiß',
-                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
-                    ),
-                    onPressed: () => print('Wlad'),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8),
-                ),
-                ButtonTheme(
-                  minWidth: 200,
-                  height: 70,
-                  buttonColor: Colors.indigo,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
-                    elevation: 9,
-                    child: Text(
-                      'Diverses',
-                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
-                    ),
-                    onPressed: () => print('Wlad'),
-                  ),
-                ),
-              ],
-            )
+            LightPage(scaffoldKey: _scaffoldKey),
+            Text('Settings'),
           ],
         ),
       ),
