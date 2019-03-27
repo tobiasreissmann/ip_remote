@@ -1,3 +1,4 @@
+import 'package:color_remote/bloc/ipAddressProvider.dart';
 import 'package:color_remote/gui/light_button.dart';
 import 'package:color_remote/models/light_mode.dart';
 import 'package:flutter/material.dart';
@@ -8,31 +9,11 @@ class LightPage extends StatelessWidget {
 
   LightPage({Key key, this.scaffoldKey}) : super(key: key);
 
-  final LightMode off = LightMode(
-    'Ausschalten',
-    'Ausgeschaltet',
-    'setoff',
-  );
-  final LightMode bright = LightMode(
-    'Helligkeit',
-    'Helligkeit geändert',
-    'setbright',
-  );
-  final LightMode rgb = LightMode(
-    'RGB',
-    'RGB-Modus',
-    'setmod1',
-  );
-  final LightMode white = LightMode(
-    'Weiß',
-    'Weiß-Modus',
-    'setmod2',
-  );
-  final LightMode rainbow = LightMode(
-    'Regenbogen',
-    'Regenbogen-Modus',
-    'setmod3',
-  );
+  final LightMode off = LightMode('Ausschalten', 'Ausgeschaltet', 'setoff');
+  final LightMode bright = LightMode('Helligkeit', 'Helligkeit geändert', 'setbright');
+  final LightMode rgb = LightMode('RGB', 'RGB-Modus', 'setmod1');
+  final LightMode white = LightMode('Weiß', 'Weiß-Modus', 'setmod2');
+  final LightMode rainbow = LightMode('Regenbogen', 'Regenbogen-Modus', 'setmod3');
 
   @override
   Widget build(BuildContext context) {
@@ -44,26 +25,26 @@ class LightPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(padding: EdgeInsets.all(8)),
+              Padding(padding: const EdgeInsets.all(8)),
               LightButton(
                 text: off.button,
-                onPressed: () => pushMode(off),
+                onPressed: () => pushMode(off, context),
               ),
               LightButton(
                 text: bright.button,
-                onPressed: () => pushMode(bright),
+                onPressed: () => pushMode(bright, context),
               ),
               LightButton(
                 text: rgb.button,
-                onPressed: () => pushMode(rgb),
+                onPressed: () => pushMode(rgb, context),
               ),
               LightButton(
                 text: white.button,
-                onPressed: () => pushMode(white),
+                onPressed: () => pushMode(white, context),
               ),
               LightButton(
                 text: rainbow.button,
-                onPressed: () => pushMode(rainbow),
+                onPressed: () => pushMode(rainbow, context),
               ),
             ],
           )
@@ -72,7 +53,7 @@ class LightPage extends StatelessWidget {
     );
   }
 
-  void pushMode(LightMode mode) async {
+  void pushMode(LightMode mode, BuildContext context) async {
     scaffoldKey.currentState.removeCurrentSnackBar();
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -82,13 +63,13 @@ class LightPage extends StatelessWidget {
       ),
     );
     try {
-      await sendRequest(mode.string);
+      await sendRequest(mode.string, context);
     } catch (error) {
       return null; // dirty error handling because webserver does not send response header
     }
   }
 
-  Future<void> sendRequest(String mode) async {
-    await http.get('http://192.168.43.31/$mode');
+  Future<void> sendRequest(String mode, BuildContext context) async {
+    await http.get('http://${IpAddressProvider.of(context).activeIpAddress}/$mode'); // TODO test the variable IpAddress
   }
 }

@@ -22,7 +22,7 @@ class LightButton extends StatelessWidget {
           buttonColor: Colors.indigo,
           child: RaisedButton(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            elevation: 9,
+            elevation: 4,
             child: Text(
               text,
               style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
@@ -31,7 +31,7 @@ class LightButton extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
         ),
       ],
     );
