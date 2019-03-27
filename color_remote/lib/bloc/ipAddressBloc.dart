@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:color_remote/services/database.dart';
 import 'package:rxdart/rxdart.dart';
 
 class IpAddressBloc {
@@ -6,6 +7,8 @@ class IpAddressBloc {
     _addIpAddressStream.listen(_addIpAddress);
     _deleteIpAddressStream.listen(_removeIpAddress);
     _changeActiveIpAdressStream.listen(_changeActiveIpAddress);
+
+    _loadData();
   }
 
   final _ipAddressListController = BehaviorSubject<List<String>>();
@@ -32,14 +35,22 @@ class IpAddressBloc {
 
   void _addIpAddress(String ipAddress) {
     _inIpAddressListSink.add((ipAddressList != null ? (ipAddressList..add(ipAddress)) : [ipAddress]).toList());
+    databaseAddIpAddress(ipAddress);
   }
 
   void _removeIpAddress(String ipAddress) {
     _inIpAddressListSink.add(ipAddressList.where((_ipAddress) => _ipAddress != ipAddress).toList());
+    databaseRemoveIpAddress(ipAddress);
   }
 
   void _changeActiveIpAddress(String ipAddress) {
     _inActiveIpAddressSink.add(ipAddress);
+    databaseChangeActiveIpAddress(ipAddress);
+  }
+
+  void _loadData() async {
+    _inIpAddressListSink.add(await databaseIpAddressList);
+    _inActiveIpAddressSink.add(await databaseActiveIpAddress);
   }
 
   void close() {
