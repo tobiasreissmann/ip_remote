@@ -1,4 +1,6 @@
 import 'package:color_remote/bloc/ipAddressProvider.dart';
+import 'package:color_remote/bloc/lightModeProvider.dart';
+import 'package:color_remote/gui/buttonSettings.dart';
 import 'package:color_remote/gui/remote.dart';
 import 'package:color_remote/gui/ipAddressSettings.dart';
 import 'package:flutter/material.dart';
@@ -30,25 +32,29 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       initialIndex: 0,
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text('Wlads IoT Lampe'),
+          title: Text('IP-Remote'),
           bottom: TabBar(
             tabs: <Widget>[
               Tab(icon: Icon(Icons.lightbulb_outline)),
+              Tab(icon: Icon(Icons.import_export)),
               Tab(icon: Icon(Icons.settings)),
             ],
           ),
         ),
-        body: IpAddressProvider(
-          child: TabBarView(
-            children: <Widget>[
-              RemotePage(scaffoldKey: _scaffoldKey),
-              IpAddressSettings(),
-            ],
+        body: LightModeProvider(
+          child: IpAddressProvider(
+            child: TabBarView(
+              children: <Widget>[
+                RemotePage(scaffoldKey: _scaffoldKey),
+                IpAddressSettings(),
+                ButtonSettings(),
+              ],
+            ),
           ),
         ),
       ),

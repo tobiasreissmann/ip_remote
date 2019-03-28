@@ -14,37 +14,44 @@ class IpAddressMask extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: TextFormField(
-              controller: _ipA,
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
+            flex: 4,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextFormField(
+                    controller: _ipA,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                Text('.'),
+                Expanded(
+                  child: TextFormField(
+                    controller: _ipB,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                Text('.'),
+                Expanded(
+                  child: TextFormField(
+                    controller: _ipC,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                Text('.'),
+                Expanded(
+                  child: TextFormField(
+                    controller: _ipD,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                Padding(padding: const EdgeInsets.all(4)),
+              ],
             ),
           ),
-          Text('.'),
-          Expanded(
-            child: TextFormField(
-              controller: _ipB,
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-            ),
-          ),
-          Text('.'),
-          Expanded(
-            child: TextFormField(
-              controller: _ipC,
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-            ),
-          ),
-          Text('.'),
-          Expanded(
-            child: TextFormField(
-              controller: _ipD,
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-            ),
-          ),
-          Padding(padding: const EdgeInsets.all(8)),
           Expanded(
             child: RaisedButton(
               elevation: 4,

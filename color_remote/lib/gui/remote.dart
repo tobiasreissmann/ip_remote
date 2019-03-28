@@ -4,11 +4,16 @@ import 'package:color_remote/models/light_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class RemotePage extends StatelessWidget {
+class RemotePage extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   RemotePage({Key key, this.scaffoldKey}) : super(key: key);
 
+  @override
+  _RemotePageState createState() => _RemotePageState();
+}
+
+class _RemotePageState extends State<RemotePage> with AutomaticKeepAliveClientMixin<RemotePage> {
   final LightMode off = LightMode('Ausschalten', 'Ausgeschaltet', 'setoff');
   final LightMode bright = LightMode('Helligkeit', 'Helligkeit geändert', 'setbright');
   final LightMode rgb = LightMode('RGB', 'RGB-Modus', 'setmod1');
@@ -16,6 +21,7 @@ class RemotePage extends StatelessWidget {
   final LightMode rainbow = LightMode('Regenbogen', 'Regenbogen-Modus', 'setmod3');
 
   @override
+  bool get wantKeepAlive => true;
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -54,8 +60,8 @@ class RemotePage extends StatelessWidget {
   }
 
   void pushMode(LightMode mode, BuildContext context) async {
-    scaffoldKey.currentState.removeCurrentSnackBar();
-    scaffoldKey.currentState.showSnackBar(
+    widget.scaffoldKey.currentState.removeCurrentSnackBar();
+    widget.scaffoldKey.currentState.showSnackBar(
       SnackBar(
         content: Text(
           mode.feedback,

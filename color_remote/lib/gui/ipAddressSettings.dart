@@ -1,6 +1,6 @@
 import 'package:color_remote/bloc/ipAddressProvider.dart';
 import 'package:color_remote/gui/ipAddressMask.dart';
-import 'package:color_remote/gui/ipAddress.dart';
+import 'package:color_remote/gui/ipAddressCard.dart';
 import 'package:flutter/material.dart';
 
 class IpAddressSettings extends StatefulWidget {
@@ -20,7 +20,7 @@ class _IpAddressSettingsState extends State<IpAddressSettings> with AutomaticKee
           builder: (BuildContext context, AsyncSnapshot<List<String>> ipAddressList) {
             return ListView(
               children: ipAddressList.hasData
-                  ? ipAddressList.data.map((ipAddress) => IpAddress(ipAddress: ipAddress)).toList()
+                  ? ipAddressList.data.map((ipAddress) => IpAddressCard(ipAddress: ipAddress)).toList()
                   : <Widget>[SizedBox()],
             );
           },
@@ -31,4 +31,4 @@ class _IpAddressSettingsState extends State<IpAddressSettings> with AutomaticKee
   }
 }
 
-// /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+// TODO  /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
