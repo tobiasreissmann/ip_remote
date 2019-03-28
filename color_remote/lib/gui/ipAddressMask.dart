@@ -52,6 +52,7 @@ class IpAddressMask extends StatelessWidget {
               child: Icon(Icons.add),
               onPressed: () {
                 final String ipAddress = '${_ipA.text}.${_ipB.text}.${_ipC.text}.${_ipD.text}';
+                // TODO cerate validation for IPs
                 IpAddressProvider.of(context).bloc.addIpAddress.add(ipAddress);
                 _ipA.clear();
                 _ipB.clear();

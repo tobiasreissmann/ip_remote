@@ -1,6 +1,6 @@
 import 'package:color_remote/bloc/ipAddressProvider.dart';
 import 'package:color_remote/gui/remote.dart';
-import 'package:color_remote/gui/settings.dart';
+import 'package:color_remote/gui/ipAddressSettings.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -35,7 +35,6 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          elevation: 4,
           title: Text('Wlads IoT Lampe'),
           bottom: TabBar(
             tabs: <Widget>[
@@ -47,8 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
         body: IpAddressProvider(
           child: TabBarView(
             children: <Widget>[
-              LightPage(scaffoldKey: _scaffoldKey),
-              Settings(),
+              RemotePage(scaffoldKey: _scaffoldKey),
+              IpAddressSettings(),
             ],
           ),
         ),

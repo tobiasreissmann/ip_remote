@@ -3,8 +3,14 @@ import 'package:color_remote/gui/ipAddressMask.dart';
 import 'package:color_remote/gui/ipAddress.dart';
 import 'package:flutter/material.dart';
 
-class Settings extends StatelessWidget {
+class IpAddressSettings extends StatefulWidget {
   @override
+  _IpAddressSettingsState createState() => _IpAddressSettingsState();
+}
+
+class _IpAddressSettingsState extends State<IpAddressSettings> with AutomaticKeepAliveClientMixin<IpAddressSettings> {
+  @override
+  bool get wantKeepAlive => true;
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.bottomCenter,
