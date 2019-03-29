@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: TabBarView(
           children: <Widget>[
             RemotePage(scaffoldKey: _scaffoldKey),
-            IpAddressSettings(),
+            IpAddressSettings(scaffoldKey: _scaffoldKey),
             ButtonSettings(),
           ],
         ),

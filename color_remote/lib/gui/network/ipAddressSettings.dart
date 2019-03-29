@@ -5,6 +5,10 @@ import 'package:color_remote/gui/network/ipAddressCard.dart';
 import 'package:color_remote/gui/network/ipAddressMask.dart';
 
 class IpAddressSettings extends StatefulWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  IpAddressSettings({Key key, @required this.scaffoldKey}) : super(key: key);
+
   @override
   _IpAddressSettingsState createState() => _IpAddressSettingsState();
 }
@@ -28,10 +32,8 @@ class _IpAddressSettingsState extends State<IpAddressSettings> with AutomaticKee
             );
           },
         ),
-        IpAddressMask(),
+        IpAddressMask(scaffoldKey: widget.scaffoldKey),
       ],
     );
   }
 }
-
-// TODO  /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/

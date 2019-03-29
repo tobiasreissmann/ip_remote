@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:color_remote/bloc/lightModeProvider.dart';
 import 'package:color_remote/gui/buttons/addButtonDialog.dart';
-import 'package:color_remote/gui/LightModeCard.dart';
+import 'package:color_remote/gui/buttons/LightModeCard.dart';
 import 'package:color_remote/models/light_mode.dart';
 
 class ButtonSettings extends StatefulWidget {

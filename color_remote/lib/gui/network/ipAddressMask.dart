@@ -8,6 +8,10 @@ class IpAddressMask extends StatelessWidget {
   final TextEditingController _ipC = TextEditingController();
   final TextEditingController _ipD = TextEditingController();
 
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  IpAddressMask({Key key, @required this.scaffoldKey}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -60,19 +64,55 @@ class IpAddressMask extends StatelessWidget {
               elevation: 4,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               child: Icon(Icons.add),
-              onPressed: () {
-                final String ipAddress = '${_ipA.text}.${_ipB.text}.${_ipC.text}.${_ipD.text}';
-                // TODO cerate validation for IPs
-                IpAddressProvider.of(context).bloc.addIpAddress.add(ipAddress);
-                _ipA.clear();
-                _ipB.clear();
-                _ipC.clear();
-                _ipD.clear();
-              },
+              onPressed: () => addIpAddress(context),
             ),
           ),
         ],
       ),
     );
+  }
+
+  void addIpAddress(BuildContext context) {
+    if (_ipA.text == '' || _ipB.text == '' || _ipB.text == '' || _ipB.text == '') {
+      scaffoldKey.currentState.removeCurrentSnackBar();
+      scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text(
+            'No empty fields allowed',
+          ),
+        ),
+      );
+      return;
+    }
+    final String ipAddress = '${_ipA.text}.${_ipB.text}.${_ipC.text}.${_ipD.text}';
+    RegExp validIp =
+        RegExp(r'^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)');
+    if (validIp.allMatches(ipAddress).length != 1) {
+      scaffoldKey.currentState.removeCurrentSnackBar();
+      scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text(
+            'False IP-Address syntax',
+          ),
+        ),
+      );
+      return;
+    }
+    if (IpAddressProvider.of(context).bloc.ipAddressList.where((_ipAddress) => _ipAddress == ipAddress).isNotEmpty) {
+      scaffoldKey.currentState.removeCurrentSnackBar();
+      scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text(
+            'IP-Address already exists',
+          ),
+        ),
+      );
+      return;
+    }
+    IpAddressProvider.of(context).bloc.addIpAddress.add(ipAddress);
+    _ipA.clear();
+    _ipB.clear();
+    _ipC.clear();
+    _ipD.clear();
   }
 }

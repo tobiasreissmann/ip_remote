@@ -54,7 +54,7 @@ class LightButton extends StatelessWidget {
 
   Future<void> sendRequest(String path, BuildContext context) async {
     String ipAddress = IpAddressProvider.of(context).bloc.activeIpAddress;
-    if (ipAddress == '') {
+    if (ipAddress == null) {
       scaffoldKey.currentState.removeCurrentSnackBar();
       scaffoldKey.currentState.showSnackBar(
         SnackBar(
@@ -73,6 +73,7 @@ class LightButton extends StatelessWidget {
         ),
       ),
     );
+    print(ipAddress);
     await http.get('http://$ipAddress/$path'); // TODO test the variable IpAddress
   }
 }
