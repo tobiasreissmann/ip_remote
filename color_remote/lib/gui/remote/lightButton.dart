@@ -47,8 +47,7 @@ class LightButton extends StatelessWidget {
     try {
       await sendRequest(lightMode.string, context);
     } catch (error) {
-      print(error.toString());
-      return null; // dirty error handling because webserver does not send response header
+      print(error);
     }
   }
 
@@ -73,7 +72,6 @@ class LightButton extends StatelessWidget {
         ),
       ),
     );
-    print(ipAddress);
-    await http.get('http://$ipAddress/$path'); // TODO test the variable IpAddress
+    await http.get('http://$ipAddress/$path');
   }
 }

@@ -76,36 +76,24 @@ class IpAddressMask extends StatelessWidget {
     if (_ipA.text == '' || _ipB.text == '' || _ipB.text == '' || _ipB.text == '') {
       scaffoldKey.currentState.removeCurrentSnackBar();
       scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text(
-            'No empty fields allowed',
-          ),
-        ),
+        SnackBar(content: Text('No empty fields allowed')),
       );
       return;
     }
     final String ipAddress = '${_ipA.text}.${_ipB.text}.${_ipC.text}.${_ipD.text}';
-    RegExp validIp =
+    RegExp validIpAddress =
         RegExp(r'^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)');
-    if (validIp.allMatches(ipAddress).length != 1) {
+    if (validIpAddress.allMatches(ipAddress).length != 1) {
       scaffoldKey.currentState.removeCurrentSnackBar();
       scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text(
-            'False IP-Address syntax',
-          ),
-        ),
+        SnackBar(content: Text('False IP-Address syntax')),
       );
       return;
     }
     if (IpAddressProvider.of(context).bloc.ipAddressList.where((_ipAddress) => _ipAddress == ipAddress).isNotEmpty) {
       scaffoldKey.currentState.removeCurrentSnackBar();
       scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text(
-            'IP-Address already exists',
-          ),
-        ),
+        SnackBar(content: Text('IP-Address already exists')),
       );
       return;
     }

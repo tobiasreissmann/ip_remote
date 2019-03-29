@@ -12,12 +12,14 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
   TextEditingController _button = TextEditingController();
   TextEditingController _feedback = TextEditingController();
   TextEditingController _string = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.pop(context),
       child: Scaffold(
+        key: _scaffoldKey,
         body: ListView(
           children: <Widget>[
             Padding(padding: const EdgeInsets.all(16)),
@@ -67,17 +69,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
                       elevation: 4,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       child: Icon(Icons.add, size: 36),
-                      onPressed: () {
-                        if (_button.text == '' || _feedback.text == '' || _string.text == '') return;
-                        LightModeProvider.of(context).bloc.addLightMode.add(
-                              LightMode(
-                                _button.text,
-                                _feedback.text,
-                                _string.text,
-                              ),
-                            );
-                        Navigator.pop(context);
-                      },
+                      onPressed: () => addLightMode(context),
                     ),
                   ),
                 ),
@@ -87,5 +79,42 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
         ),
       ),
     );
+  }
+
+  void addLightMode(BuildContext context) {
+    LightMode lightMode = LightMode(
+      _button.text,
+      _feedback.text,
+      _string.text,
+    );
+    if (_button.text == '' || _feedback.text == '' || _string.text == '') {
+      _scaffoldKey.currentState.removeCurrentSnackBar();
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(content: Text('No emtpy fields allowed')),
+      );
+      return;
+    }
+    if (LightModeProvider.of(context)
+        .bloc
+        .lightModeList
+        .where((_lightMode) =>
+            _lightMode.button == lightMode.button &&
+            _lightMode.feedback == lightMode.feedback &&
+            _lightMode.string == lightMode.string)
+        .isNotEmpty) {
+      _scaffoldKey.currentState.removeCurrentSnackBar();
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(content: Text('Button already exists')),
+      );
+      return;
+    }
+    RegExp validPath = RegExp(r'^[/]');
+    if (validPath.allMatches(lightMode.string).length > 0) {
+      _scaffoldKey.currentState.removeCurrentSnackBar();
+      _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Type path without "/"')));
+      return;
+    }
+    LightModeProvider.of(context).bloc.addLightMode.add(lightMode);
+    Navigator.pop(context);
   }
 }
