@@ -43,6 +43,27 @@ class LightButton extends StatelessWidget {
   }
 
   void pushMode(LightMode lightMode, BuildContext context) async {
+    try {
+      await sendRequest(lightMode.string, context);
+    } catch (error) {
+      print(error.toString());
+      return null; // dirty error handling because webserver does not send response header
+    }
+  }
+
+  Future<void> sendRequest(String path, BuildContext context) async {
+    String ipAddress = IpAddressProvider.of(context).bloc.activeIpAddress;
+    if (ipAddress == '') {
+      scaffoldKey.currentState.removeCurrentSnackBar();
+      scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text(
+            'No IP-Address configured / activated',
+          ),
+        ),
+      );
+      return;
+    }
     scaffoldKey.currentState.removeCurrentSnackBar();
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -51,14 +72,6 @@ class LightButton extends StatelessWidget {
         ),
       ),
     );
-    try {
-      await sendRequest(lightMode.string, context);
-    } catch (error) {
-      return null; // dirty error handling because webserver does not send response header
-    }
-  }
-
-  Future<void> sendRequest(String path, BuildContext context) async {
-    await http.get('http://${IpAddressProvider.of(context).activeIpAddress}/$path'); // TODO test the variable IpAddress
+    await http.get('http://$ipAddress/$path'); // TODO test the variable IpAddress
   }
 }
