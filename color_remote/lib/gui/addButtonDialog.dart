@@ -2,25 +2,29 @@ import 'package:color_remote/bloc/lightModeProvider.dart';
 import 'package:color_remote/models/light_mode.dart';
 import 'package:flutter/material.dart';
 
-class AddButtonDialog extends StatelessWidget {
-  final TextEditingController button = TextEditingController();
-  final TextEditingController feedback = TextEditingController();
-  final TextEditingController string = TextEditingController();
+class AddButtonDialog extends StatefulWidget {
+  @override
+  _AddButtonDialogState createState() => _AddButtonDialogState();
+}
+
+class _AddButtonDialogState extends State<AddButtonDialog> {
+  TextEditingController _button = TextEditingController();
+  TextEditingController _feedback = TextEditingController();
+  TextEditingController _string = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.pop(context),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Column(
+        body: ListView(
           children: <Widget>[
             Padding(padding: const EdgeInsets.all(16)),
             Padding(
               padding: const EdgeInsets.all(16),
               child: TextFormField(
                 keyboardAppearance: Brightness.dark,
-                controller: button,
+                controller: _button,
                 decoration: InputDecoration(
                   labelText: 'Button Text',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -31,7 +35,7 @@ class AddButtonDialog extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextFormField(
                 keyboardAppearance: Brightness.dark,
-                controller: feedback,
+                controller: _feedback,
                 decoration: InputDecoration(
                   labelText: 'Feedback Message',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -42,7 +46,7 @@ class AddButtonDialog extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: TextFormField(
                 keyboardAppearance: Brightness.dark,
-                controller: string,
+                controller: _string,
                 decoration: InputDecoration(
                   labelText: 'Request Path',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -63,12 +67,12 @@ class AddButtonDialog extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       child: Icon(Icons.add, size: 36),
                       onPressed: () {
-                        if (button.text == '' || feedback.text == '' || string.text == '') return;
+                        if (_button.text == '' || _feedback.text == '' || _string.text == '') return;
                         LightModeProvider.of(context).bloc.addLightMode.add(
                               LightMode(
-                                button.text,
-                                feedback.text,
-                                string.text,
+                                _button.text,
+                                _feedback.text,
+                                _string.text,
                               ),
                             );
                         Navigator.pop(context);
