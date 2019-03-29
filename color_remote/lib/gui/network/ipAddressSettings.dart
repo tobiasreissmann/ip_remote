@@ -1,7 +1,8 @@
-import 'package:color_remote/bloc/ipAddressProvider.dart';
-import 'package:color_remote/gui/ipAddressMask.dart';
-import 'package:color_remote/gui/ipAddressCard.dart';
 import 'package:flutter/material.dart';
+
+import 'package:color_remote/bloc/ipAddressProvider.dart';
+import 'package:color_remote/gui/network/ipAddressCard.dart';
+import 'package:color_remote/gui/network/ipAddressMask.dart';
 
 class IpAddressSettings extends StatefulWidget {
   @override

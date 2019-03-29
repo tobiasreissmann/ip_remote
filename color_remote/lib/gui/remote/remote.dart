@@ -1,7 +1,8 @@
-import 'package:color_remote/bloc/lightModeProvider.dart';
-import 'package:color_remote/gui/lightButton.dart';
-import 'package:color_remote/models/light_mode.dart';
 import 'package:flutter/material.dart';
+
+import 'package:color_remote/bloc/lightModeProvider.dart';
+import 'package:color_remote/gui/remote/lightButton.dart';
+import 'package:color_remote/models/light_mode.dart';
 
 class RemotePage extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;

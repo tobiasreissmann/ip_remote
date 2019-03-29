@@ -1,8 +1,9 @@
-import 'package:color_remote/bloc/lightModeProvider.dart';
-import 'package:color_remote/gui/LightModeCard.dart';
-import 'package:color_remote/gui/addButtonDialog.dart';
-import 'package:color_remote/models/light_mode.dart';
 import 'package:flutter/material.dart';
+
+import 'package:color_remote/bloc/lightModeProvider.dart';
+import 'package:color_remote/gui/buttons/addButtonDialog.dart';
+import 'package:color_remote/gui/LightModeCard.dart';
+import 'package:color_remote/models/light_mode.dart';
 
 class ButtonSettings extends StatefulWidget {
   @override

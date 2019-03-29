@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:color_remote/bloc/lightModeProvider.dart';
 import 'package:color_remote/models/light_mode.dart';
-import 'package:flutter/material.dart';
 
 class AddButtonDialog extends StatefulWidget {
   @override
