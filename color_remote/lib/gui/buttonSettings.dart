@@ -1,5 +1,6 @@
 import 'package:color_remote/bloc/lightModeProvider.dart';
 import 'package:color_remote/gui/LightModeCard.dart';
+import 'package:color_remote/gui/addButtonDialog.dart';
 import 'package:color_remote/models/light_mode.dart';
 import 'package:flutter/material.dart';
 
@@ -19,10 +20,11 @@ class _ButtonSettingsState extends State<ButtonSettings> with AutomaticKeepAlive
           stream: LightModeProvider.of(context).bloc.lightModeListStream,
           builder: (BuildContext context, AsyncSnapshot<List<LightMode>> lightModeList) {
             return ListView(
-              children: lightModeList.hasData
-                  ? lightModeList.data.map((lightMode) => LightModeCard(lightMode: lightMode)).toList()
-                  : <Widget>[SizedBox()],
-            );
+                children: <Widget>[]
+                  ..addAll(lightModeList.hasData
+                      ? lightModeList.data.map((lightMode) => LightModeCard(lightMode: lightMode)).toList()
+                      : <Widget>[SizedBox()])
+                  ..addAll([SizedBox(height: 60)].toList()));
           },
         ),
         Padding(
@@ -31,18 +33,20 @@ class _ButtonSettingsState extends State<ButtonSettings> with AutomaticKeepAlive
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Expanded(flex: 4, child: SizedBox()),
-              Expanded(
-                child: RaisedButton(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                  child: Icon(Icons.add),
-                  onPressed: () => LightModeProvider.of(context).bloc.addLightMode.add(
-                        LightMode(
-                          'button',
-                          'feedback',
-                          'string',
+              Hero(
+                tag: "addButton",
+                child: ButtonTheme(
+                  height: 40,
+                  minWidth: 60,
+                  child: RaisedButton(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    child: Icon(Icons.add),
+                    onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddButtonDialog()),
                         ),
-                      ),
+                  ),
                 ),
               ),
             ],

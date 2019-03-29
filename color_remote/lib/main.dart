@@ -10,13 +10,17 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        brightness: Brightness.dark,
-        accentColor: Colors.indigo,
+    return LightModeProvider(
+      child: IpAddressProvider(
+        child: MaterialApp(
+          theme: ThemeData(
+            primarySwatch: Colors.indigo,
+            brightness: Brightness.dark,
+            accentColor: Colors.indigo,
+          ),
+          home: MyHomePage(),
+        ),
       ),
-      home: MyHomePage(),
     );
   }
 }
@@ -46,16 +50,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-        body: LightModeProvider(
-          child: IpAddressProvider(
-            child: TabBarView(
-              children: <Widget>[
-                RemotePage(scaffoldKey: _scaffoldKey),
-                IpAddressSettings(),
-                ButtonSettings(),
-              ],
-            ),
-          ),
+        body: TabBarView(
+          children: <Widget>[
+            RemotePage(scaffoldKey: _scaffoldKey),
+            IpAddressSettings(),
+            ButtonSettings(),
+          ],
         ),
       ),
     );

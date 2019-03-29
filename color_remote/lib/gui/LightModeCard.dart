@@ -27,7 +27,7 @@ class LightModeCard extends StatelessWidget {
                     ),
                     Padding(padding: const EdgeInsets.all(2)),
                     Text(
-                      lightMode.feedback,
+                      '"${lightMode.feedback}"',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[400],
@@ -41,7 +41,7 @@ class LightModeCard extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'OxygenMono',
                   fontSize: 16,
-                  color: Colors.indigo[200]
+                  color: Colors.indigo[200],
                 ),
               ),
               IconButton(

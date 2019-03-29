@@ -19,9 +19,11 @@ class _IpAddressSettingsState extends State<IpAddressSettings> with AutomaticKee
           stream: IpAddressProvider.of(context).bloc.ipAddressListStream,
           builder: (BuildContext context, AsyncSnapshot<List<String>> ipAddressList) {
             return ListView(
-              children: ipAddressList.hasData
-                  ? ipAddressList.data.map((ipAddress) => IpAddressCard(ipAddress: ipAddress)).toList()
-                  : <Widget>[SizedBox()],
+              children: <Widget>[]
+                ..addAll(ipAddressList.hasData
+                    ? ipAddressList.data.map((ipAddress) => IpAddressCard(ipAddress: ipAddress)).toList()
+                    : <Widget>[SizedBox()])
+                ..addAll([SizedBox(height: 60)].toList()),
             );
           },
         ),

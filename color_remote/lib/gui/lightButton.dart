@@ -1,15 +1,16 @@
+import 'package:color_remote/models/light_mode.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:color_remote/bloc/ipAddressProvider.dart';
 
 class LightButton extends StatelessWidget {
-  final Widget child;
-  final String text;
-  final VoidCallback onPressed;
+  final LightMode lightMode;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   LightButton({
     Key key,
-    this.child,
-    this.text,
-    this.onPressed,
+    @required this.lightMode,
+    @required this.scaffoldKey,
   }) : super(key: key);
 
   @override
@@ -24,10 +25,14 @@ class LightButton extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             elevation: 4,
             child: Text(
-              text,
-              style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w400),
+              lightMode.button,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.w400,
+              ),
             ),
-            onPressed: onPressed,
+            onPressed: () => pushMode(lightMode, context),
           ),
         ),
         Padding(
@@ -35,5 +40,25 @@ class LightButton extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void pushMode(LightMode lightMode, BuildContext context) async {
+    scaffoldKey.currentState.removeCurrentSnackBar();
+    scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(
+          lightMode.feedback,
+        ),
+      ),
+    );
+    try {
+      await sendRequest(lightMode.string, context);
+    } catch (error) {
+      return null; // dirty error handling because webserver does not send response header
+    }
+  }
+
+  Future<void> sendRequest(String path, BuildContext context) async {
+    await http.get('http://${IpAddressProvider.of(context).activeIpAddress}/$path'); // TODO test the variable IpAddress
   }
 }

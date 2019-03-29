@@ -24,7 +24,7 @@ class IpAddressMask extends StatelessWidget {
                     keyboardType: TextInputType.number,
                   ),
                 ),
-                Text('.'),
+                Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
                 Expanded(
                   child: TextFormField(
                     controller: _ipB,
@@ -32,7 +32,7 @@ class IpAddressMask extends StatelessWidget {
                     keyboardType: TextInputType.number,
                   ),
                 ),
-                Text('.'),
+                Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
                 Expanded(
                   child: TextFormField(
                     controller: _ipC,
@@ -40,7 +40,7 @@ class IpAddressMask extends StatelessWidget {
                     keyboardType: TextInputType.number,
                   ),
                 ),
-                Text('.'),
+                Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
                 Expanded(
                   child: TextFormField(
                     controller: _ipD,
@@ -52,7 +52,9 @@ class IpAddressMask extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
+          ButtonTheme(
+            height: 40,
+            minWidth: 60,
             child: RaisedButton(
               elevation: 4,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),

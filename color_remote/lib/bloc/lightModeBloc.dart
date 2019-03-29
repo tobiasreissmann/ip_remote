@@ -8,7 +8,7 @@ class LightModeBloc {
     _addLightModeStream.listen(_addLightMode);
     _deleteLightModeStream.listen(_removeLightMode);
 
-    // _loadData();
+    _loadData();
   }
 
   final _lightModeListController = BehaviorSubject<List<LightMode>>();
@@ -26,12 +26,12 @@ class LightModeBloc {
 
   void _addLightMode(LightMode lightMode) {
     _inLightModeListSink.add((lightModeList != null ? (lightModeList..add(lightMode)) : [lightMode]).toList());
-    // databaseAddLightMode(lightMode);
+    databaseAddLightMode(lightMode);
   }
 
   void _removeLightMode(LightMode lightMode) {
     _inLightModeListSink.add(lightModeList.where((_lightMode) => _lightMode != lightMode).toList());
-    // databaseRemoveLightMode(lightMode);
+    databaseRemoveLightMode(lightMode);
   }
 
   void _loadData() async {
