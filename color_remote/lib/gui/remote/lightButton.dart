@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:color_remote/bloc/ipAddressProvider.dart';
-import 'package:color_remote/models/light_mode.dart';
+import 'package:ip_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/models/light_mode.dart';
 
 class LightButton extends StatelessWidget {
   final LightMode lightMode;
@@ -45,7 +45,7 @@ class LightButton extends StatelessWidget {
 
   void pushMode(LightMode lightMode, BuildContext context) async {
     try {
-      await sendRequest(lightMode.string, context);
+      await sendRequest(lightMode.path, context);
     } catch (error) {
       print(error);
     }

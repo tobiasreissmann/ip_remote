@@ -1,6 +1,7 @@
-import 'package:color_remote/models/light_mode.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'package:ip_remote/models/light_mode.dart';
 
 Future<Database> get database async {
   String path = join(await getDatabasesPath(), 'ipRemote.db');
@@ -10,7 +11,7 @@ Future<Database> get database async {
     onCreate: (Database db, int version) async {
       await db.execute('CREATE TABLE IpAddresses (address TEXT PRIMARY KEY, active BIT)');
       await db.execute(
-          'CREATE TABLE LightModes (button TEXT, feedback TEXT, string TEXT, PRIMARY KEY (button, feedback, string))');
+          'CREATE TABLE LightModes (button TEXT, feedback TEXT, path TEXT, PRIMARY KEY (button, feedback, path))');
     },
   );
 }
@@ -58,11 +59,11 @@ void databaseChangeActiveIpAddress(String ipAddress) async {
 void databaseAddLightMode(LightMode lightMode) async {
   Database _database = await database;
   await _database.transaction((txn) async => await txn.rawInsert(
-      'INSERT INTO LightModes(button, feedback, string) VALUES("${lightMode.button}", "${lightMode.feedback}", "${lightMode.string}")'));
+      'INSERT INTO LightModes(button, feedback, path) VALUES("${lightMode.button}", "${lightMode.feedback}", "${lightMode.path}")'));
 }
 
 void databaseRemoveLightMode(LightMode lightMode) async {
   Database _database = await database;
   await _database.rawDelete(
-      'DELETE FROM LightModes WHERE button = "${lightMode.button}" AND feedback = "${lightMode.feedback}" AND string = "${lightMode.string}"');
+      'DELETE FROM LightModes WHERE button = "${lightMode.button}" AND feedback = "${lightMode.feedback}" AND path = "${lightMode.path}"');
 }

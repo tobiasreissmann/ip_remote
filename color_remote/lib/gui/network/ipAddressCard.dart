@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:color_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/bloc/ipAddressProvider.dart';
 
 class IpAddressCard extends StatelessWidget {
   IpAddressCard({@required this.ipAddress});

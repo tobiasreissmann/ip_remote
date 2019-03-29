@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:color_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/bloc/ipAddressProvider.dart';
 
 class IpAddressMask extends StatelessWidget {
   final TextEditingController _ipA = TextEditingController();

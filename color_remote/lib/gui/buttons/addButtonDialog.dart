@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:color_remote/bloc/lightModeProvider.dart';
-import 'package:color_remote/models/light_mode.dart';
+import 'package:ip_remote/bloc/lightModeProvider.dart';
+import 'package:ip_remote/models/light_mode.dart';
 
 class AddButtonDialog extends StatefulWidget {
   @override
@@ -100,7 +100,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
         .where((_lightMode) =>
             _lightMode.button == lightMode.button &&
             _lightMode.feedback == lightMode.feedback &&
-            _lightMode.string == lightMode.string)
+            _lightMode.path == lightMode.path)
         .isNotEmpty) {
       _scaffoldKey.currentState.removeCurrentSnackBar();
       _scaffoldKey.currentState.showSnackBar(
@@ -109,7 +109,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
       return;
     }
     RegExp validPath = RegExp(r'^[/]');
-    if (validPath.allMatches(lightMode.string).length > 0) {
+    if (validPath.allMatches(lightMode.path).length > 0) {
       _scaffoldKey.currentState.removeCurrentSnackBar();
       _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Type path without "/"')));
       return;

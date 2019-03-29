@@ -1,7 +1,7 @@
 class LightMode {
   final String button;
   final String feedback;
-  final String string;
+  final String path;
 
-  LightMode(this.button, this.feedback, this.string);
+  LightMode(this.button, this.feedback, this.path);
 }

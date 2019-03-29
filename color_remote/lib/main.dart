@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:color_remote/bloc/ipAddressProvider.dart';
-import 'package:color_remote/bloc/lightModeProvider.dart';
-import 'package:color_remote/gui/buttons/buttonSettings.dart';
-import 'package:color_remote/gui/network/ipAddressSettings.dart';
-import 'package:color_remote/gui/remote/remote.dart';
+import 'package:ip_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/bloc/lightModeProvider.dart';
+import 'package:ip_remote/gui/buttons/buttonSettings.dart';
+import 'package:ip_remote/gui/network/ipAddressSettings.dart';
+import 'package:ip_remote/gui/remote/remote.dart';
 
 void main() => runApp(MyApp());
 

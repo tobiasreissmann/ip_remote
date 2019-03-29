@@ -1,4 +1,4 @@
-# color_remote
+# ip_remote
 
 A new Flutter project.
 

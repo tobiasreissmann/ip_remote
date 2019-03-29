@@ -1,5 +1,6 @@
-import 'package:color_remote/bloc/lightModeBloc.dart';
 import 'package:flutter/material.dart';
+
+import 'package:ip_remote/bloc/lightModeBloc.dart';
 
 class LightModeProvider extends InheritedWidget {
   LightModeProvider({Key key, this.child}) : super(key: key, child: child);

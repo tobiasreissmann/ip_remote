@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:color_remote/bloc/ipAddressProvider.dart';
-import 'package:color_remote/gui/network/ipAddressCard.dart';
-import 'package:color_remote/gui/network/ipAddressMask.dart';
+import 'package:ip_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/gui/network/ipAddressCard.dart';
+import 'package:ip_remote/gui/network/ipAddressMask.dart';
 
 class IpAddressSettings extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;

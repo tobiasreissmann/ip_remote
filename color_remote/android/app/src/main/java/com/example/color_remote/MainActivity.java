@@ -1,4 +1,4 @@
-package com.example.color_remote;
+package com.tobiasreissmann.ip_remote;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

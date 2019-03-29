@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:color_remote/bloc/lightModeProvider.dart';
-import 'package:color_remote/models/light_mode.dart';
+import 'package:ip_remote/bloc/lightModeProvider.dart';
+import 'package:ip_remote/models/light_mode.dart';
 
 class LightModeCard extends StatelessWidget {
   final LightMode lightMode;
@@ -38,7 +38,7 @@ class LightModeCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "/${lightMode.string}",
+                "/${lightMode.path}",
                 style: TextStyle(
                   fontFamily: 'OxygenMono',
                   fontSize: 16,
