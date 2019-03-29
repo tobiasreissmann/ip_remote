@@ -28,7 +28,7 @@ Future<List<LightMode>> get databaseLightModeList async {
   Database _database = await database;
   List<Map> _list = await _database.rawQuery('SELECT * FROM LightModes');
   List<LightMode> _lightModesList = [];
-  _list.forEach((entry) => _lightModesList.add(LightMode(entry['button'], entry['feedback'], entry['string'])));
+  _list.forEach((entry) => _lightModesList.add(LightMode(entry['button'], entry['feedback'], entry['path'])));
   return _lightModesList;
 }
 

@@ -36,13 +36,13 @@ class IpAddressBloc {
 
   void _addIpAddress(String ipAddress) {
     _inIpAddressListSink.add((ipAddressList != null ? (ipAddressList..add(ipAddress)) : [ipAddress]).toList());
-    if (activeIpAddress == null) _inActiveIpAddressSink.add(ipAddress);
+    if (activeIpAddress == null) changeActiveIpAddress.add(ipAddress);
     databaseAddIpAddress(ipAddress);
   }
 
   void _removeIpAddress(String ipAddress) {
     _inIpAddressListSink.add(ipAddressList.where((_ipAddress) => _ipAddress != ipAddress).toList());
-    if (activeIpAddress == ipAddress) _inActiveIpAddressSink.add(null);
+    if (activeIpAddress == ipAddress) changeActiveIpAddress.add(null);
     databaseRemoveIpAddress(ipAddress);
   }
 
