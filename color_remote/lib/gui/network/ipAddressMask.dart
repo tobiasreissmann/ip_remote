@@ -82,7 +82,7 @@ class IpAddressMask extends StatelessWidget {
     }
     final String ipAddress = '${_ipA.text}.${_ipB.text}.${_ipC.text}.${_ipD.text}';
     RegExp validIpAddress =
-        RegExp(r'^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)');
+        RegExp(r'^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$');
     if (validIpAddress.allMatches(ipAddress).length != 1) {
       scaffoldKey.currentState.removeCurrentSnackBar();
       scaffoldKey.currentState.showSnackBar(

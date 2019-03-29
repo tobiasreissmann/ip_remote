@@ -26,14 +26,36 @@ class _IpAddressSettingsState extends State<IpAddressSettings> with AutomaticKee
             return ListView(
               children: <Widget>[]
                 ..addAll(ipAddressList.hasData
-                    ? ipAddressList.data.map((ipAddress) => IpAddressCard(ipAddress: ipAddress)).toList()
-                    : <Widget>[SizedBox()])
-                ..addAll([SizedBox(height: 60)].toList()),
+                    ? ipAddressList.data.length > 0
+                        ? ipAddressList.data.map((ipAddress) => IpAddressCard(ipAddress: ipAddress)).toList()
+                        : [NoIpAddressPlaceholder()]
+                    : [NoIpAddressPlaceholder()])
+                ..addAll([SizedBox(height: 80)]),
             );
           },
         ),
         IpAddressMask(scaffoldKey: widget.scaffoldKey),
       ],
+    );
+  }
+}
+
+class NoIpAddressPlaceholder extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Container(
+        alignment: Alignment.bottomCenter,
+        height: 40,
+        child: Text(
+          'Add IP-Address here',
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            color: Colors.grey,
+          ),
+        ),
+      ),
     );
   }
 }

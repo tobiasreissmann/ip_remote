@@ -23,9 +23,11 @@ class _ButtonSettingsState extends State<ButtonSettings> with AutomaticKeepAlive
             return ListView(
                 children: <Widget>[]
                   ..addAll(lightModeList.hasData
-                      ? lightModeList.data.map((lightMode) => LightModeCard(lightMode: lightMode)).toList()
-                      : <Widget>[SizedBox()])
-                  ..addAll([SizedBox(height: 60)].toList()));
+                      ? lightModeList.data.length > 0
+                          ? lightModeList.data.map((lightMode) => LightModeCard(lightMode: lightMode)).toList()
+                          : [NoButtonsPlaceholder()]
+                      : [NoButtonsPlaceholder()])
+                  ..addAll([SizedBox(height: 80)]));
           },
         ),
         Padding(
@@ -54,6 +56,26 @@ class _ButtonSettingsState extends State<ButtonSettings> with AutomaticKeepAlive
           ),
         ),
       ],
+    );
+  }
+}
+
+class NoButtonsPlaceholder extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Container(
+        alignment: Alignment.bottomCenter,
+        height: 40,
+        child: Text(
+          'Add buttons here',
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            color: Colors.grey,
+          ),
+        ),
+      ),
     );
   }
 }
