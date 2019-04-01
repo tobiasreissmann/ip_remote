@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:ip_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/models/ip_address.dart';
 import 'package:ip_remote/models/light_mode.dart';
 
 class LightButton extends StatelessWidget {
@@ -52,8 +53,8 @@ class LightButton extends StatelessWidget {
   }
 
   Future<void> sendRequest(String path, BuildContext context) async {
-    String ipAddress = IpAddressProvider.of(context).bloc.activeIpAddress;
-    if (ipAddress == null) {
+    IpAddress ipAddress = IpAddressProvider.of(context).bloc.activeIpAddress;
+    if (ipAddress.address == null) {
       scaffoldKey.currentState.removeCurrentSnackBar();
       scaffoldKey.currentState.showSnackBar(
         SnackBar(
@@ -72,6 +73,6 @@ class LightButton extends StatelessWidget {
         ),
       ),
     );
-    await http.get('http://$ipAddress/$path');
+    await http.post('http://${ipAddress.address}/$path');
   }
 }

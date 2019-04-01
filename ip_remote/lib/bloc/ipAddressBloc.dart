@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
 import 'package:ip_remote/services/database.dart';
+import 'package:ip_remote/models/ip_address.dart';
 
 class IpAddressBloc {
   IpAddressBloc() {
@@ -12,41 +13,41 @@ class IpAddressBloc {
     _loadData();
   }
 
-  final _ipAddressListController = BehaviorSubject<List<String>>();
-  StreamSink<List<String>> get _inIpAddressListSink => _ipAddressListController.sink;
-  Stream<List<String>> get ipAddressListStream => _ipAddressListController.stream;
-  List<String> get ipAddressList => _ipAddressListController.value;
+  final _ipAddressListController = BehaviorSubject<List<IpAddress>>();
+  StreamSink<List<IpAddress>> get _inIpAddressListSink => _ipAddressListController.sink;
+  Stream<List<IpAddress>> get ipAddressListStream => _ipAddressListController.stream;
+  List<IpAddress> get ipAddressList => _ipAddressListController.value;
 
-  final _activeIpAddressController = BehaviorSubject<String>();
-  StreamSink<String> get _inActiveIpAddressSink => _activeIpAddressController.sink;
-  Stream<String> get activeIpAddressStream => _activeIpAddressController.stream;
-  String get activeIpAddress => _activeIpAddressController.value;
+  final _activeIpAddressController = BehaviorSubject<IpAddress>();
+  StreamSink<IpAddress> get _inActiveIpAddressSink => _activeIpAddressController.sink;
+  Stream<IpAddress> get activeIpAddressStream => _activeIpAddressController.stream;
+  IpAddress get activeIpAddress => _activeIpAddressController.value;
 
-  final _changeActiveIpAdress = StreamController<String>();
-  StreamSink<String> get changeActiveIpAddress => _changeActiveIpAdress.sink;
-  Stream<String> get _changeActiveIpAdressStream => _changeActiveIpAdress.stream;
+  final _changeActiveIpAdress = StreamController<IpAddress>();
+  StreamSink<IpAddress> get changeActiveIpAddress => _changeActiveIpAdress.sink;
+  Stream<IpAddress> get _changeActiveIpAdressStream => _changeActiveIpAdress.stream;
 
-  final _addIpAddressController = StreamController<String>();
-  StreamSink<String> get addIpAddress => _addIpAddressController.sink;
-  Stream<String> get _addIpAddressStream => _addIpAddressController.stream;
+  final _addIpAddressController = StreamController<IpAddress>();
+  StreamSink<IpAddress> get addIpAddress => _addIpAddressController.sink;
+  Stream<IpAddress> get _addIpAddressStream => _addIpAddressController.stream;
 
-  final _deleteIpAddressController = StreamController<String>();
-  StreamSink<String> get deleteIpAddress => _deleteIpAddressController.sink;
-  Stream<String> get _deleteIpAddressStream => _deleteIpAddressController.stream;
+  final _deleteIpAddressController = StreamController<IpAddress>();
+  StreamSink<IpAddress> get deleteIpAddress => _deleteIpAddressController.sink;
+  Stream<IpAddress> get _deleteIpAddressStream => _deleteIpAddressController.stream;
 
-  void _addIpAddress(String ipAddress) {
+  void _addIpAddress(IpAddress ipAddress) {
     _inIpAddressListSink.add((ipAddressList != null ? (ipAddressList..add(ipAddress)) : [ipAddress]).toList());
-    if (activeIpAddress == null) changeActiveIpAddress.add(ipAddress);
+    if (ipAddressList.isEmpty || activeIpAddress == null) changeActiveIpAddress.add(ipAddress);
     databaseAddIpAddress(ipAddress);
   }
 
-  void _removeIpAddress(String ipAddress) {
+  void _removeIpAddress(IpAddress ipAddress) {
     _inIpAddressListSink.add(ipAddressList.where((_ipAddress) => _ipAddress != ipAddress).toList());
-    if (activeIpAddress == ipAddress) changeActiveIpAddress.add(null);
+    if (activeIpAddress.address == ipAddress.address && activeIpAddress.description == ipAddress.description) changeActiveIpAddress.add(null);
     databaseRemoveIpAddress(ipAddress);
   }
 
-  void _changeActiveIpAddress(String ipAddress) {
+  void _changeActiveIpAddress(IpAddress ipAddress) {
     _inActiveIpAddressSink.add(ipAddress);
     databaseChangeActiveIpAddress(ipAddress);
   }

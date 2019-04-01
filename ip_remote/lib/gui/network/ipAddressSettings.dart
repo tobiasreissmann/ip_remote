@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:ip_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/gui/network/addIpAddressDialog.dart';
 import 'package:ip_remote/gui/network/ipAddressCard.dart';
-import 'package:ip_remote/gui/network/ipAddressMask.dart';
+import 'package:ip_remote/models/ip_address.dart';
 
 class IpAddressSettings extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -22,7 +23,7 @@ class _IpAddressSettingsState extends State<IpAddressSettings> with AutomaticKee
       children: <Widget>[
         StreamBuilder(
           stream: IpAddressProvider.of(context).bloc.ipAddressListStream,
-          builder: (BuildContext context, AsyncSnapshot<List<String>> ipAddressList) {
+          builder: (BuildContext context, AsyncSnapshot<List<IpAddress>> ipAddressList) {
             return ListView(
               children: <Widget>[]
                 ..addAll(ipAddressList.hasData
@@ -34,7 +35,31 @@ class _IpAddressSettingsState extends State<IpAddressSettings> with AutomaticKee
             );
           },
         ),
-        IpAddressMask(scaffoldKey: widget.scaffoldKey),
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Expanded(flex: 4, child: SizedBox()),
+              Hero(
+                tag: "addIpAddress",
+                child: ButtonTheme(
+                  height: 40,
+                  minWidth: 60,
+                  child: RaisedButton(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    child: Icon(Icons.add),
+                    onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddIpAddressDialog()),
+                        ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

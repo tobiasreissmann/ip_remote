@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:ip_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/models/ip_address.dart';
 
 class IpAddressCard extends StatelessWidget {
   IpAddressCard({@required this.ipAddress});
-  final String ipAddress;
+  final IpAddress ipAddress;
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,17 @@ class IpAddressCard extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: Text(
-                  ipAddress,
-                  style: TextStyle(fontSize: 20),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      ipAddress.description,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text(
+                      ipAddress.address,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
                 ),
               ),
               StreamBuilder<Object>(
@@ -30,7 +39,7 @@ class IpAddressCard extends StatelessWidget {
                       Icons.check_circle,
                     ),
                     color: activeIpAdress.hasData
-                        ? activeIpAdress.data == ipAddress ? Colors.green : Colors.white
+                        ? activeIpAdress.data.address == ipAddress.address ? Colors.green : Colors.white
                         : Colors.white,
                     onPressed: () => IpAddressProvider.of(context).bloc.changeActiveIpAddress.add(ipAddress),
                   );
