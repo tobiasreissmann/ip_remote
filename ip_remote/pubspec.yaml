@@ -1,7 +1,7 @@
 name: ip_remote
 description: A new Flutter project.
 
-version: 1.1.0+3
+version: 1.1.1+4
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
