@@ -14,19 +14,24 @@ class IpAddressCard extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         child: Padding(
-          padding: const EdgeInsets.only(left: 8),
+          padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
           child: Row(
             children: <Widget>[
               Expanded(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       ipAddress.description,
                       style: TextStyle(fontSize: 20),
                     ),
+                    Padding(padding: const EdgeInsets.all(2)),
                     Text(
                       ipAddress.address,
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[400],
+                      ),
                     ),
                   ],
                 ),
