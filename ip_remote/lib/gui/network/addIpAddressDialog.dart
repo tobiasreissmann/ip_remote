@@ -9,10 +9,15 @@ class AddIpAddressDialog extends StatefulWidget {
 }
 
 class _AddIpAddressDialogState extends State<AddIpAddressDialog> {
-  final TextEditingController _ipA = TextEditingController();
-  final TextEditingController _ipB = TextEditingController();
-  final TextEditingController _ipC = TextEditingController();
-  final TextEditingController _ipD = TextEditingController();
+  final TextEditingController _ipATextEditingController = TextEditingController();
+  final TextEditingController _ipBTextEditingController = TextEditingController();
+  final TextEditingController _ipCTextEditingController = TextEditingController();
+  final TextEditingController _ipDTextEditingController = TextEditingController();
+
+  final FocusNode _ipAFocusNode = FocusNode();
+  final FocusNode _ipBFocusNode = FocusNode();
+  final FocusNode _ipCFocusNode = FocusNode();
+  final FocusNode _ipDFocusNode = FocusNode();
 
   TextEditingController _desciption = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -45,48 +50,28 @@ class _AddIpAddressDialogState extends State<AddIpAddressDialog> {
                     flex: 4,
                     child: Row(
                       children: <Widget>[
-                        Expanded(
-                          child: TextFormField(
-                            controller: _ipA,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                          ),
+                        IpField(
+                          focusNode: _ipAFocusNode,
+                          textEditingController: _ipATextEditingController,
+                          onFieldSubmitted: () => changeFocus(),
                         ),
                         Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _ipB,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                          ),
+                        IpField(
+                          focusNode: _ipBFocusNode,
+                          textEditingController: _ipBTextEditingController,
+                          onFieldSubmitted: () => changeFocus(),
                         ),
                         Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _ipC,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                          ),
+                        IpField(
+                          focusNode: _ipCFocusNode,
+                          textEditingController: _ipCTextEditingController,
+                          onFieldSubmitted: () => changeFocus(),
                         ),
                         Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _ipD,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                          ),
+                        IpField(
+                          focusNode: _ipDFocusNode,
+                          textEditingController: _ipDTextEditingController,
+                          onFieldSubmitted: () => changeFocus(),
                         ),
                         Padding(padding: const EdgeInsets.all(4)),
                       ],
@@ -120,15 +105,29 @@ class _AddIpAddressDialogState extends State<AddIpAddressDialog> {
     );
   }
 
+  void changeFocus() {
+    if (_ipATextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_ipAFocusNode);
+    if (_ipBTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_ipBFocusNode);
+    if (_ipCTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_ipCFocusNode);
+    if (_ipDTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_ipDFocusNode);
+  }
+
   void addIpAddress(BuildContext context) {
-    if (_ipA.text == '' || _ipB.text == '' || _ipB.text == '' || _ipB.text == '') {
+    changeFocus();
+    if (_ipATextEditingController.text.isEmpty ||
+        _ipBTextEditingController.text.isEmpty ||
+        _ipBTextEditingController.text.isEmpty ||
+        _ipBTextEditingController.text.isEmpty) {
       _scaffoldKey.currentState.removeCurrentSnackBar();
       _scaffoldKey.currentState.showSnackBar(
-        SnackBar(content: Text('No empty fields allowed')),
+        SnackBar(content: Text('The IP-Address is incomplete.')),
       );
       return;
     }
-    final IpAddress ipAddress = IpAddress('${_ipA.text}.${_ipB.text}.${_ipC.text}.${_ipD.text}', _desciption.text);
+    final IpAddress ipAddress = IpAddress(
+      '${_ipATextEditingController.text}.${_ipBTextEditingController.text}.${_ipCTextEditingController.text}.${_ipDTextEditingController.text}',
+      _desciption.text != '' ? _desciption.text : 'IP-Address',
+    );
     RegExp validIpAddress =
         RegExp(r'^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$');
     if (validIpAddress.allMatches(ipAddress.address).length != 1) {
@@ -151,11 +150,34 @@ class _AddIpAddressDialogState extends State<AddIpAddressDialog> {
       return;
     }
     IpAddressProvider.of(context).bloc.addIpAddress.add(ipAddress);
-    _ipA.clear();
-    _ipB.clear();
-    _ipC.clear();
-    _ipD.clear();
+    _ipATextEditingController.clear();
+    _ipBTextEditingController.clear();
+    _ipCTextEditingController.clear();
+    _ipDTextEditingController.clear();
     _desciption.clear();
     Navigator.pop(context);
+  }
+}
+
+class IpField extends StatelessWidget {
+  IpField({this.textEditingController, this.focusNode, this.onFieldSubmitted});
+  final TextEditingController textEditingController;
+  final FocusNode focusNode;
+  final VoidCallback onFieldSubmitted;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: TextFormField(
+        controller: textEditingController,
+        focusNode: focusNode,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+        textAlign: TextAlign.center,
+        keyboardType: TextInputType.number,
+        onFieldSubmitted: (string) => onFieldSubmitted(),
+      ),
+    );
   }
 }

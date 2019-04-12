@@ -54,7 +54,7 @@ class LightButton extends StatelessWidget {
 
   Future<void> sendRequest(String path, BuildContext context) async {
     IpAddress ipAddress = IpAddressProvider.of(context).bloc.activeIpAddress;
-    if (ipAddress == null) { // TODO test new ipAddress null check
+    if (ipAddress == null) {
       scaffoldKey.currentState.removeCurrentSnackBar();
       scaffoldKey.currentState.showSnackBar(
         SnackBar(

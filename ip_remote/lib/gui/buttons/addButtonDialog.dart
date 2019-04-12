@@ -9,9 +9,14 @@ class AddButtonDialog extends StatefulWidget {
 }
 
 class _AddButtonDialogState extends State<AddButtonDialog> {
-  TextEditingController _button = TextEditingController();
-  TextEditingController _feedback = TextEditingController();
-  TextEditingController _string = TextEditingController();
+  TextEditingController _buttonTextEditingController = TextEditingController();
+  TextEditingController _feedbackTextEditingController = TextEditingController();
+  TextEditingController _pathTextEditingController = TextEditingController();
+
+  FocusNode _buttonFocusNode = FocusNode();
+  FocusNode _feedbackFocusNode = FocusNode();
+  FocusNode _pathFocusNode = FocusNode();
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -23,38 +28,23 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
         body: ListView(
           children: <Widget>[
             Padding(padding: const EdgeInsets.all(16)),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: TextFormField(
-                keyboardAppearance: Brightness.dark,
-                controller: _button,
-                decoration: InputDecoration(
-                  labelText: 'Button Text',
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                ),
-              ),
+            _LightTextField(
+              label: 'Button Text',
+              textEditingController: _buttonTextEditingController,
+              focusNode: _buttonFocusNode,
+              onFieldSubmitted: () => changeFocus(),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: TextFormField(
-                keyboardAppearance: Brightness.dark,
-                controller: _feedback,
-                decoration: InputDecoration(
-                  labelText: 'Feedback Message',
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                ),
-              ),
+            _LightTextField(
+              label: 'Feedback Message',
+              textEditingController: _feedbackTextEditingController,
+              focusNode: _feedbackFocusNode,
+              onFieldSubmitted: () => changeFocus(),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: TextFormField(
-                keyboardAppearance: Brightness.dark,
-                controller: _string,
-                decoration: InputDecoration(
-                  labelText: 'Request Path',
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                ),
-              ),
+            _LightTextField(
+              label: 'Request Path',
+              textEditingController: _pathTextEditingController,
+              focusNode: _pathFocusNode,
+              onFieldSubmitted: () => changeFocus(),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
@@ -81,19 +71,28 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
     );
   }
 
+  void changeFocus() {
+    if (_buttonTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_buttonFocusNode);
+    if (_feedbackTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_feedbackFocusNode);
+    if (_pathTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_pathFocusNode);
+  }
+
   void addLightMode(BuildContext context) {
-    LightMode lightMode = LightMode(
-      _button.text,
-      _feedback.text,
-      _string.text,
-    );
-    if (_button.text == '' || _feedback.text == '' || _string.text == '') {
+    changeFocus();
+    if (_buttonTextEditingController.text.isEmpty ||
+        _feedbackTextEditingController.text.isEmpty ||
+        _pathTextEditingController.text.isEmpty) {
       _scaffoldKey.currentState.removeCurrentSnackBar();
       _scaffoldKey.currentState.showSnackBar(
         SnackBar(content: Text('No emtpy fields allowed')),
       );
       return;
     }
+    final LightMode lightMode = LightMode(
+      _buttonTextEditingController.text,
+      _feedbackTextEditingController.text,
+      _pathTextEditingController.text,
+    );
     if (LightModeProvider.of(context)
         .bloc
         .lightModeList
@@ -116,5 +115,30 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
     }
     LightModeProvider.of(context).bloc.addLightMode.add(lightMode);
     Navigator.pop(context);
+  }
+}
+
+class _LightTextField extends StatelessWidget {
+  _LightTextField({this.textEditingController, this.label, this.focusNode, this.onFieldSubmitted});
+  final TextEditingController textEditingController;
+  final FocusNode focusNode;
+  final String label;
+  final VoidCallback onFieldSubmitted;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: TextFormField(
+        keyboardAppearance: Brightness.dark,
+        controller: textEditingController,
+        focusNode: focusNode,
+        onFieldSubmitted: (string) => onFieldSubmitted(),
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      ),
+    );
   }
 }
