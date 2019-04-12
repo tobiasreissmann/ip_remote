@@ -18,6 +18,17 @@ class LightModeCard extends StatelessWidget {
           padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
           child: Row(
             children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 8, right: 16),
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Color(int.tryParse(lightMode.buttonColor, radix: 16) ?? 0xff3f51b5),
+                  ),
+                ),
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

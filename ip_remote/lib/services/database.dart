@@ -8,18 +8,11 @@ Future<Database> get database async {
   String path = join(await getDatabasesPath(), 'ipRemote.db');
   return await openDatabase(
     path,
-    version: 2,
+    version: 3,
     onCreate: (Database db, int version) async {
       await db.execute('CREATE TABLE IpAddresses (address TEXT, desc TEXT, active BIT, PRIMARY KEY (address, desc))');
       await db.execute(
-          'CREATE TABLE LightModes (button TEXT, feedback TEXT, path TEXT, PRIMARY KEY (button, feedback, path))');
-    },
-    onUpgrade: (Database db, int oldVersion, int newVersion) async {
-      List<Map> _list = await db.rawQuery('SELECT * FROM IpAddresses');
-      await db.execute('DROP TABLE IpAddresses');
-      await db.execute('CREATE TABLE IpAddresses (address TEXT, desc TEXT, active BIT, PRIMARY KEY (address, desc))');
-      _list.forEach((entry) => db.rawInsert(
-          'INSERT INTO IpAddresses (address, desc, active) VALUES ("${entry['address']}", "IP-Address", "${entry['active']}")'));
+          'CREATE TABLE LightModes (button TEXT, feedback TEXT, path TEXT, buttonColor TEXT, PRIMARY KEY (button, feedback, path))');
     },
   );
 }
@@ -36,7 +29,8 @@ Future<List<LightMode>> get databaseLightModeList async {
   Database _database = await database;
   List<Map> _list = await _database.rawQuery('SELECT * FROM LightModes');
   List<LightMode> _lightModesList = [];
-  _list.forEach((entry) => _lightModesList.add(LightMode(entry['button'], entry['feedback'], entry['path'])));
+  _list.forEach((entry) => _lightModesList
+      .add(LightMode(entry['button'], entry['feedback'], entry['path'], entry['buttonColor'] ?? 'ff3f51b5')));
   return _lightModesList;
 }
 
@@ -69,7 +63,7 @@ void databaseChangeActiveIpAddress(IpAddress ipAddress) async {
 void databaseAddLightMode(LightMode lightMode) async {
   Database _database = await database;
   await _database.transaction((txn) async => await txn.rawInsert(
-      'INSERT INTO LightModes(button, feedback, path) VALUES("${lightMode.button}", "${lightMode.feedback}", "${lightMode.path}")'));
+      'INSERT INTO LightModes(button, feedback, path, buttonColor) VALUES("${lightMode.button}", "${lightMode.feedback}", "${lightMode.path}", "${lightMode.buttonColor}")'));
 }
 
 void databaseRemoveLightMode(LightMode lightMode) async {

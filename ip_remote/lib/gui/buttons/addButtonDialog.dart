@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 import 'package:ip_remote/bloc/lightModeProvider.dart';
 import 'package:ip_remote/models/light_mode.dart';
@@ -18,6 +19,8 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
   FocusNode _pathFocusNode = FocusNode();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Color buttonColor = Colors.indigo;
 
   @override
   Widget build(BuildContext context) {
@@ -47,22 +50,46 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
               onFieldSubmitted: () => changeFocus(),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
-              child: ButtonTheme(
-                height: 50,
-                child: Hero(
-                  tag: "addButton",
-                  child: ButtonTheme(
-                    height: 60,
-                    minWidth: 90,
-                    child: RaisedButton(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      child: Icon(Icons.add, size: 36),
-                      onPressed: () => addLightMode(context),
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    flex: 3,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.color_lens,
+                        size: 30,
+                        color: Theme.of(context).disabledColor,
+                      ),
+                      onPressed: () => chooseColor(context),
                     ),
                   ),
-                ),
+                  Expanded(
+                    flex: 6,
+                    child: ButtonTheme(
+                      height: 50,
+                      child: Hero(
+                        tag: "addButton",
+                        child: ButtonTheme(
+                          height: 60,
+                          minWidth: 90,
+                          child: RaisedButton(
+                            color: buttonColor,
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            child: Icon(Icons.add, size: 36),
+                            onPressed: () => addLightMode(context),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: SizedBox(),
+                  ),
+                ],
               ),
             ),
           ],
@@ -75,6 +102,20 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
     if (_buttonTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_buttonFocusNode);
     if (_feedbackTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_feedbackFocusNode);
     if (_pathTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_pathFocusNode);
+  }
+
+  void chooseColor(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return MaterialColorPicker(
+          circleSize: 50,
+          allowShades: false,
+          onMainColorChange: (Color selectedColor) => setState(() => buttonColor = selectedColor),
+          selectedColor: buttonColor,
+        );
+      },
+    );
   }
 
   void addLightMode(BuildContext context) {
@@ -92,6 +133,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
       _buttonTextEditingController.text,
       _feedbackTextEditingController.text,
       _pathTextEditingController.text,
+      buttonColor.toString().substring(37,45),
     );
     if (LightModeProvider.of(context)
         .bloc

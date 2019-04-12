@@ -22,14 +22,21 @@ class LightButton extends StatelessWidget {
         ButtonTheme(
           minWidth: 200,
           height: 70,
-          buttonColor: Colors.indigo,
           child: RaisedButton(
+            color: Color(int.tryParse(lightMode.buttonColor, radix: 16) ?? 0xff3f51b5),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             elevation: 4,
             child: Text(
               lightMode.button,
               style: TextStyle(
-                color: Colors.white,
+                color: ThemeData.estimateBrightnessForColor(
+                          Color(
+                            int.tryParse(lightMode.buttonColor, radix: 16) ?? 0xff3f51b5,
+                          ),
+                        ) ==
+                        Brightness.light
+                    ? Colors.black
+                    : Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.w400,
               ),
