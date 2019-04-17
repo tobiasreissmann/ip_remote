@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:ip_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/models/ip_address.dart';
 
 class IpAddressCard extends StatelessWidget {
@@ -37,7 +37,7 @@ class IpAddressCard extends StatelessWidget {
                 ),
               ),
               StreamBuilder<Object>(
-                stream: IpAddressProvider.of(context).bloc.activeIpAddressStream,
+                stream: BlocProvider.of(context).ipAddressBloc.activeIpAddressStream,
                 builder: (BuildContext context, AsyncSnapshot activeIpAdress) {
                   return IconButton(
                     icon: Icon(
@@ -46,7 +46,7 @@ class IpAddressCard extends StatelessWidget {
                     color: activeIpAdress.hasData
                         ? activeIpAdress.data.address == ipAddress.address ? Colors.green : Colors.white
                         : Colors.white,
-                    onPressed: () => IpAddressProvider.of(context).bloc.changeActiveIpAddress.add(ipAddress),
+                    onPressed: () => BlocProvider.of(context).ipAddressBloc.changeActiveIpAddress.add(ipAddress),
                   );
                 },
               ),
@@ -55,7 +55,7 @@ class IpAddressCard extends StatelessWidget {
                   Icons.remove_circle,
                 ),
                 color: Colors.red[700],
-                onPressed: () => IpAddressProvider.of(context).bloc.deleteIpAddress.add(ipAddress),
+                onPressed: () => BlocProvider.of(context).ipAddressBloc.deleteIpAddress.add(ipAddress),
               ),
             ],
           ),

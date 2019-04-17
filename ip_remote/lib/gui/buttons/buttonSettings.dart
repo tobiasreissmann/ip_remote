@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reorderable_list/flutter_reorderable_list.dart';
+// import 'package:flutter_reorderable_list/flutter_reorderable_list.dart';
 
-import 'package:ip_remote/bloc/lightModeProvider.dart';
+import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/gui/buttons/addButtonDialog.dart';
 import 'package:ip_remote/gui/buttons/LightModeCard.dart';
 import 'package:ip_remote/models/light_mode.dart';
@@ -19,7 +19,7 @@ class _ButtonSettingsState extends State<ButtonSettings> with AutomaticKeepAlive
       alignment: Alignment.bottomRight,
       children: <Widget>[
         StreamBuilder(
-          stream: LightModeProvider.of(context).bloc.lightModeListStream,
+          stream: BlocProvider.of(context).lightModeBloc.lightModeListStream,
           builder: (BuildContext context, AsyncSnapshot<List<LightMode>> lightModeList) {
             return ListView(
                 children: <Widget>[]
@@ -82,18 +82,18 @@ class _ButtonSettingsState extends State<ButtonSettings> with AutomaticKeepAlive
     );
   }
 
-  bool _reorderCallback(Key key, Key newPosition, List<LightMode> lightModeList) {
-    int draggingIndex = lightModeList.indexWhere((LightMode lightMode) => lightMode.key == key);
-    int newPositionIndex = lightModeList.indexWhere((LightMode lightMode) => lightMode.key == key);
+  // bool _reorderCallback(Key key, Key newPosition, List<LightMode> lightModeList) {
+  //   int draggingIndex = lightModeList.indexWhere((LightMode lightMode) => lightMode.key == key);
+  //   int newPositionIndex = lightModeList.indexWhere((LightMode lightMode) => lightMode.key == key);
 
-    final draggedItem = lightModeList[draggingIndex];
-    // setState(() {  // TODO add necesary bloc methods
-    //   debugPrint("Reordering $key -> $newPosition");
-    //   lightModeList.removeAt(draggingIndex);
-    //   lightModeList.insert(newPositionIndex, draggedItem);
-    // });
-    return true;
-  }
+  //   final draggedItem = lightModeList[draggingIndex];
+  //   // setState(() {
+  //   //   debugPrint("Reordering $key -> $newPosition");
+  //   //   lightModeList.removeAt(draggingIndex);
+  //   //   lightModeList.insert(newPositionIndex, draggedItem);
+  //   // });
+  //   return true;
+  // }
 }
 
 class NoButtonsPlaceholder extends StatelessWidget {

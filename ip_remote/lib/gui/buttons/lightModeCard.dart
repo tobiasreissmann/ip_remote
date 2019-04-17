@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reorderable_list/flutter_reorderable_list.dart';
+// import 'package:flutter_reorderable_list/flutter_reorderable_list.dart';
 
-import 'package:ip_remote/bloc/lightModeProvider.dart';
+import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/models/light_mode.dart';
 
 class LightModeCard extends StatelessWidget {
@@ -44,7 +44,7 @@ class LightModeCard extends StatelessWidget {
                 height: 20,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: Color(int.tryParse(lightMode.buttonColor, radix: 16) ?? 0xff3f51b5),
+                  color: lightMode.buttonColor ?? 0xff3f51b5,
                 ),
               ),
             ),
@@ -80,7 +80,7 @@ class LightModeCard extends StatelessWidget {
                 Icons.remove_circle,
                 color: Colors.red[700],
               ),
-              onPressed: () => LightModeProvider.of(context).bloc.deleteLightMode.add(lightMode),
+              onPressed: () => BlocProvider.of(context).lightModeBloc.deleteLightMode.add(lightMode),
             ),
           ],
         ),

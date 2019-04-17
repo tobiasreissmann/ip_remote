@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:ip_remote/bloc/lightModeProvider.dart';
+import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/gui/remote/lightButton.dart';
 import 'package:ip_remote/models/light_mode.dart';
 
@@ -21,7 +21,7 @@ class _RemotePageState extends State<RemotePage> with AutomaticKeepAliveClientMi
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.topCenter,
       child: StreamBuilder<List<LightMode>>(
-        stream: LightModeProvider.of(context).bloc.lightModeListStream,
+        stream: BlocProvider.of(context).lightModeBloc.lightModeListStream,
         builder: (BuildContext context, AsyncSnapshot lightModeList) {
           return ListView(
             children: <Widget>[Padding(padding: const EdgeInsets.all(8))]..addAll(

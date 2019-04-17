@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:ip_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/gui/network/addIpAddressDialog.dart';
 import 'package:ip_remote/gui/network/ipAddressCard.dart';
 import 'package:ip_remote/models/ip_address.dart';
@@ -22,7 +22,7 @@ class _IpAddressSettingsState extends State<IpAddressSettings> with AutomaticKee
       alignment: Alignment.bottomCenter,
       children: <Widget>[
         StreamBuilder(
-          stream: IpAddressProvider.of(context).bloc.ipAddressListStream,
+          stream: BlocProvider.of(context).ipAddressBloc.ipAddressListStream,
           builder: (BuildContext context, AsyncSnapshot<List<IpAddress>> ipAddressList) {
             return ListView(
               children: <Widget>[]

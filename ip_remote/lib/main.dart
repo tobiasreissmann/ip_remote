@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:ip_remote/bloc/ipAddressProvider.dart';
-import 'package:ip_remote/bloc/lightModeProvider.dart';
+import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/gui/buttons/buttonSettings.dart';
 import 'package:ip_remote/gui/network/ipAddressSettings.dart';
 import 'package:ip_remote/gui/remote/remote.dart';
@@ -11,16 +10,14 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return LightModeProvider(
-      child: IpAddressProvider(
-        child: MaterialApp(
-          theme: ThemeData(
-            primarySwatch: Colors.indigo,
-            brightness: Brightness.dark,
-            accentColor: Colors.indigo,
-          ),
-          home: MyHomePage(),
+    return BlocProvider(
+      child: MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.indigo,
+          brightness: Brightness.dark,
+          accentColor: Colors.indigo,
         ),
+        home: MyHomePage(),
       ),
     );
   }

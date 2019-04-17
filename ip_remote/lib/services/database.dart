@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:ip_remote/models/ip_address.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -21,7 +22,12 @@ Future<List<IpAddress>> get databaseIpAddressList async {
   Database _database = await database;
   List<Map> _list = await _database.rawQuery('SELECT * FROM IpAddresses');
   List<IpAddress> _ipAddressList = [];
-  _list.forEach((entry) => _ipAddressList.add(IpAddress(entry['address'], entry['desc'])));
+  _list.forEach((entry) => _ipAddressList.add(
+        IpAddress(
+          entry['address'],
+          entry['desc'],
+        ),
+      ));
   return _ipAddressList;
 }
 
@@ -29,8 +35,14 @@ Future<List<LightMode>> get databaseLightModeList async {
   Database _database = await database;
   List<Map> _list = await _database.rawQuery('SELECT * FROM LightModes');
   List<LightMode> _lightModesList = [];
-  _list.forEach((entry) => _lightModesList
-      .add(LightMode(entry['button'], entry['feedback'], entry['path'], entry['buttonColor'] ?? 'ff3f51b5')));
+  _list.forEach((entry) => _lightModesList.add(
+        LightMode(
+          entry['button'],
+          entry['feedback'],
+          entry['path'],
+          Color(int.tryParse(entry['buttonColor'], radix: 16) ?? 0xff3f51b5),
+        ),
+      ));
   return _lightModesList;
 }
 
@@ -63,7 +75,7 @@ void databaseChangeActiveIpAddress(IpAddress ipAddress) async {
 void databaseAddLightMode(LightMode lightMode) async {
   Database _database = await database;
   await _database.transaction((txn) async => await txn.rawInsert(
-      'INSERT INTO LightModes(button, feedback, path, buttonColor) VALUES("${lightMode.button}", "${lightMode.feedback}", "${lightMode.path}", "${lightMode.buttonColor}")'));
+      'INSERT INTO LightModes(button, feedback, path, buttonColor) VALUES("${lightMode.button}", "${lightMode.feedback}", "${lightMode.path}", "${lightMode.buttonColor.toString().substring(37, 45)}")'));
 }
 
 void databaseRemoveLightMode(LightMode lightMode) async {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:ip_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/models/ip_address.dart';
 
 class AddIpAddressDialog extends StatefulWidget {
@@ -137,8 +137,8 @@ class _AddIpAddressDialogState extends State<AddIpAddressDialog> {
       );
       return;
     }
-    if (IpAddressProvider.of(context)
-        .bloc
+    if (BlocProvider.of(context)
+        .ipAddressBloc
         .ipAddressList
         .where(
             (_ipAddress) => _ipAddress.address == ipAddress.address && _ipAddress.description == ipAddress.description)
@@ -149,7 +149,7 @@ class _AddIpAddressDialogState extends State<AddIpAddressDialog> {
       );
       return;
     }
-    IpAddressProvider.of(context).bloc.addIpAddress.add(ipAddress);
+    BlocProvider.of(context).ipAddressBloc.addIpAddress.add(ipAddress);
     _ipATextEditingController.clear();
     _ipBTextEditingController.clear();
     _ipCTextEditingController.clear();

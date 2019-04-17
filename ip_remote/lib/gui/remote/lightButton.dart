@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:ip_remote/bloc/ipAddressProvider.dart';
+import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/models/ip_address.dart';
 import 'package:ip_remote/models/light_mode.dart';
 
@@ -23,16 +23,14 @@ class LightButton extends StatelessWidget {
           minWidth: 200,
           height: 70,
           child: RaisedButton(
-            color: Color(int.tryParse(lightMode.buttonColor, radix: 16) ?? 0xff3f51b5),
+            color: lightMode.buttonColor ?? 0xff3f51b5,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             elevation: 4,
             child: Text(
               lightMode.button,
               style: TextStyle(
                 color: ThemeData.estimateBrightnessForColor(
-                          Color(
-                            int.tryParse(lightMode.buttonColor, radix: 16) ?? 0xff3f51b5,
-                          ),
+                          lightMode.buttonColor ?? 0xff3f51b5,
                         ) ==
                         Brightness.light
                     ? Colors.black
@@ -60,7 +58,7 @@ class LightButton extends StatelessWidget {
   }
 
   Future<void> sendRequest(String path, BuildContext context) async {
-    IpAddress ipAddress = IpAddressProvider.of(context).bloc.activeIpAddress;
+    IpAddress ipAddress = BlocProvider.of(context).ipAddressBloc.activeIpAddress;
     if (ipAddress == null) {
       scaffoldKey.currentState.removeCurrentSnackBar();
       scaffoldKey.currentState.showSnackBar(

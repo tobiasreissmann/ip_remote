@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
-import 'package:ip_remote/bloc/lightModeProvider.dart';
+import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/models/light_mode.dart';
 
 class AddButtonDialog extends StatefulWidget {
@@ -20,7 +20,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Color buttonColor = Colors.indigo;
+  Color _buttonColor = Colors.indigo;
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
                           height: 60,
                           minWidth: 90,
                           child: RaisedButton(
-                            color: buttonColor,
+                            color: _buttonColor,
                             elevation: 4,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             child: Icon(Icons.add, size: 36),
@@ -111,8 +111,8 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
         return MaterialColorPicker(
           circleSize: 50,
           allowShades: false,
-          onMainColorChange: (Color selectedColor) => setState(() => buttonColor = selectedColor),
-          selectedColor: buttonColor,
+          onMainColorChange: (Color selectedColor) => setState(() => _buttonColor = selectedColor),
+          selectedColor: _buttonColor,
         );
       },
     );
@@ -133,10 +133,10 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
       _buttonTextEditingController.text,
       _feedbackTextEditingController.text,
       _pathTextEditingController.text,
-      buttonColor.toString().substring(37,45),
+      _buttonColor,
     );
-    if (LightModeProvider.of(context)
-        .bloc
+    if (BlocProvider.of(context)
+        .lightModeBloc
         .lightModeList
         .where((_lightMode) =>
             _lightMode.button == lightMode.button &&
@@ -155,7 +155,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
       _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Type path without "/"')));
       return;
     }
-    LightModeProvider.of(context).bloc.addLightMode.add(lightMode);
+    BlocProvider.of(context).lightModeBloc.addLightMode.add(lightMode);
     Navigator.pop(context);
   }
 }
