@@ -21,19 +21,22 @@ class _IpAddressSettingsState extends State<IpAddressSettings> with AutomaticKee
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
-        StreamBuilder(
-          stream: BlocProvider.of(context).ipAddressBloc.ipAddressListStream,
-          builder: (BuildContext context, AsyncSnapshot<List<IpAddress>> ipAddressList) {
-            return ListView(
-              children: <Widget>[]
-                ..addAll(ipAddressList.hasData
-                    ? ipAddressList.data.length > 0
-                        ? ipAddressList.data.map((ipAddress) => IpAddressCard(ipAddress: ipAddress)).toList()
-                        : [NoIpAddressPlaceholder()]
-                    : [NoIpAddressPlaceholder()])
-                ..addAll([SizedBox(height: 80)]),
-            );
-          },
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: StreamBuilder(
+            stream: BlocProvider.of(context).ipAddressBloc.ipAddressListStream,
+            builder: (BuildContext context, AsyncSnapshot<List<IpAddress>> ipAddressList) {
+              return ipAddressList.hasData
+                  ? ListView.builder(
+                      itemCount: ipAddressList.data.isNotEmpty ? ipAddressList.data.length : 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (ipAddressList.data.isEmpty) return NoIpAddressPlaceholder();
+                        return IpAddressCard(ipAddress: ipAddressList.data[index]);
+                      },
+                    )
+                  : SizedBox();
+            },
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(8),

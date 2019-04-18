@@ -13,7 +13,7 @@ Future<Database> get database async {
     onCreate: (Database db, int version) async {
       await db.execute('CREATE TABLE IpAddresses (address TEXT, desc TEXT, active BIT, PRIMARY KEY (address, desc))');
       await db.execute(
-          'CREATE TABLE LightModes (button TEXT, feedback TEXT, path TEXT, buttonColor TEXT, PRIMARY KEY (button, feedback, path))');
+          'CREATE TABLE LightModes (button TEXT, feedback TEXT, path TEXT, buttonColor INTEGER, PRIMARY KEY (button, feedback, path))');
     },
   );
 }
@@ -40,7 +40,7 @@ Future<List<LightMode>> get databaseLightModeList async {
           entry['button'],
           entry['feedback'],
           entry['path'],
-          Color(int.tryParse(entry['buttonColor'], radix: 16) ?? 0xff3f51b5),
+          Color(entry['buttonColor'] ?? 4282339765),
         ),
       ));
   return _lightModesList;
@@ -49,8 +49,8 @@ Future<List<LightMode>> get databaseLightModeList async {
 Future<IpAddress> get databaseActiveIpAddress async {
   Database _database = await database;
   List<Map> _list = await _database.rawQuery('SELECT * FROM IpAddresses WHERE active = 1');
-  if (_list.isNotEmpty) return IpAddress(_list[0]['address'], _list[0]['desc']);
-  return null;
+  if (_list.isEmpty) return null;
+  return IpAddress(_list[0]['address'], _list[0]['desc']);
 }
 
 void databaseAddIpAddress(IpAddress ipAddress) async {
@@ -75,11 +75,20 @@ void databaseChangeActiveIpAddress(IpAddress ipAddress) async {
 void databaseAddLightMode(LightMode lightMode) async {
   Database _database = await database;
   await _database.transaction((txn) async => await txn.rawInsert(
-      'INSERT INTO LightModes(button, feedback, path, buttonColor) VALUES("${lightMode.button}", "${lightMode.feedback}", "${lightMode.path}", "${lightMode.buttonColor.toString().substring(37, 45)}")'));
+      'INSERT INTO LightModes(button, feedback, path, buttonColor) VALUES("${lightMode.button}", "${lightMode.feedback}", "${lightMode.path}", "${lightMode.buttonColor.value}")'));
 }
 
 void databaseRemoveLightMode(LightMode lightMode) async {
   Database _database = await database;
   await _database.rawDelete(
       'DELETE FROM LightModes WHERE button = "${lightMode.button}" AND feedback = "${lightMode.feedback}" AND path = "${lightMode.path}"');
+}
+
+void databaseSaveLightModes(List<LightMode> lightModeList) async {
+  Database _database = await database;
+  await _database.transaction((txn) async => await txn.rawDelete('DELETE FROM LightModes'));
+  lightModeList.forEach(
+    (lightMode) async => await _database.transaction((txn) async => await txn.rawInsert(
+        'INSERT INTO LightModes(button, feedback, path, buttonColor) VALUES("${lightMode.button}", "${lightMode.feedback}", "${lightMode.path}", "${lightMode.buttonColor.value}")')),
+  );
 }

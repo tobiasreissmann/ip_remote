@@ -17,28 +17,30 @@ class _RemotePageState extends State<RemotePage> with AutomaticKeepAliveClientMi
   @override
   bool get wantKeepAlive => true;
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      alignment: Alignment.topCenter,
-      child: StreamBuilder<List<LightMode>>(
-        stream: BlocProvider.of(context).lightModeBloc.lightModeListStream,
-        builder: (BuildContext context, AsyncSnapshot lightModeList) {
-          return ListView(
-            children: <Widget>[Padding(padding: const EdgeInsets.all(8))]..addAll(
-                lightModeList.hasData
-                    ? lightModeList.data.length > 0
-                        ? lightModeList.data.map<Widget>(
-                            (lightMode) => LightButton(
-                                  lightMode: lightMode,
-                                  scaffoldKey: widget.scaffoldKey,
-                                ),
-                          )
-                        : [NoButtonsPlaceholder()]
-                    : [NoButtonsPlaceholder()],
-              ),
-          );
-        },
-      ),
+    return Stack(
+      alignment: Alignment.bottomRight,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(14),
+          child: StreamBuilder<List<LightMode>>(
+            stream: BlocProvider.of(context).lightModeBloc.lightModeListStream,
+            builder: (BuildContext context, AsyncSnapshot lightModeList) {
+              return lightModeList.hasData
+                  ? ListView.builder(
+                      itemCount: lightModeList.data.isNotEmpty ? lightModeList.data.length : 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (lightModeList.data.isEmpty) return NoButtonsPlaceholder();
+                        return LightButton(
+                          lightMode: lightModeList.data[index],
+                          scaffoldKey: widget.scaffoldKey,
+                        );
+                      },
+                    )
+                  : SizedBox();
+            },
+          ),
+        ),
+      ],
     );
   }
 }
@@ -48,7 +50,7 @@ class NoButtonsPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.bottomCenter,
-      height: 40,
+      height: 50,
       child: Text(
         'No buttons configured',
         style: TextStyle(

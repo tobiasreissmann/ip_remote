@@ -8,6 +8,7 @@ class LightModeBloc {
   LightModeBloc() {
     _addLightModeStream.listen(_addLightMode);
     _deleteLightModeStream.listen(_removeLightMode);
+    _reorderLightModesStream.listen(_reorderLightModes);
 
     _loadData();
   }
@@ -25,6 +26,10 @@ class LightModeBloc {
   StreamSink<LightMode> get deleteLightMode => _deleteLightModeController.sink;
   Stream<LightMode> get _deleteLightModeStream => _deleteLightModeController.stream;
 
+  final _reorderLightModesController = StreamController<List<int>>();
+  StreamSink<List<int>> get reorderLightModes => _reorderLightModesController.sink;
+  Stream<List<int>> get _reorderLightModesStream => _reorderLightModesController.stream;
+
   void _addLightMode(LightMode lightMode) {
     _inLightModeListSink.add((lightModeList != null ? (lightModeList..add(lightMode)) : [lightMode]).toList());
     databaseAddLightMode(lightMode);
@@ -35,6 +40,16 @@ class LightModeBloc {
     databaseRemoveLightMode(lightMode);
   }
 
+  void _reorderLightModes(List<int> indizes) {
+    if (indizes[0] == indizes[1]) return;
+    List<LightMode> _list = lightModeList.toList();
+    LightMode _lightMode = _list[indizes[0]];
+    _list.removeAt(indizes[0]);
+    _list.insert(indizes[1], _lightMode);
+    _inLightModeListSink.add(_list.toList());
+    databaseSaveLightModes(_list);
+  }
+
   void _loadData() async {
     _lightModeListController.add(await databaseLightModeList);
   }
@@ -43,5 +58,6 @@ class LightModeBloc {
     _lightModeListController.close();
     _addLightModeController.close();
     _deleteLightModeController.close();
+    _reorderLightModesController.close();
   }
 }

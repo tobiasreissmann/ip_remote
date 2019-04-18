@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  dragable_flutter_list:
+    dependency: "direct main"
+    description:
+      name: dragable_flutter_list
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -48,13 +55,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.5"
-  flutter_reorderable_list:
-    dependency: "direct main"
-    description:
-      name: flutter_reorderable_list
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter

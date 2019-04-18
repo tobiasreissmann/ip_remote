@@ -1,36 +1,15 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_reorderable_list/flutter_reorderable_list.dart';
 
 import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/models/light_mode.dart';
 
-class LightModeCard extends StatelessWidget {
+class LightModeCardItem extends StatelessWidget {
   final LightMode lightMode;
 
-  LightModeCard({Key key, this.lightMode}) : super(key: key);
+  LightModeCardItem({Key key, this.lightMode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // return ReorderableItem(
-    //   key: Key(lightMode.button + lightMode.feedback + lightMode.path),
-    //   childBuilder: (BuildContext context, ReorderableItemState state) {
-    //     DelayedReorderableListener(
-    //       child: Container(
-    //         color: state == ReorderableItemState.placeholder ? null : Colors.red,
-    //         child: Opacity(
-    //           opacity: state == ReorderableItemState.placeholder ? 0.0 : 1.0,
-    //           child: IntrinsicHeight(
-    //             child: Row(
-    //               crossAxisAlignment: CrossAxisAlignment.stretch,
-    //               children: <Widget>[
-    //                 Expanded(
-    //                   child: Padding(
-    //                     padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
-    //                     child: Text('data.title', style: Theme.of(context).textTheme.subhead),
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: Padding(

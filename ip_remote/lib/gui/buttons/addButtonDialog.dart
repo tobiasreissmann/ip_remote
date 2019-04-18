@@ -57,10 +57,13 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
                   Expanded(
                     flex: 3,
                     child: IconButton(
-                      icon: Icon(
-                        Icons.color_lens,
-                        size: 30,
-                        color: Theme.of(context).disabledColor,
+                      icon: Container(
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: _buttonColor,
+                        ),
                       ),
                       onPressed: () => chooseColor(context),
                     ),
@@ -78,7 +81,13 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
                             color: _buttonColor,
                             elevation: 4,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            child: Icon(Icons.add, size: 36),
+                            child: Icon(
+                              Icons.add,
+                              size: 36,
+                              color: ThemeData.estimateBrightnessForColor(_buttonColor) == Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
+                            ),
                             onPressed: () => addLightMode(context),
                           ),
                         ),
