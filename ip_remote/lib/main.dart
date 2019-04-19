@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ip_remote/bloc/blocProvider.dart';
@@ -49,9 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         body: TabBarView(
+          dragStartBehavior: DragStartBehavior.down,
           children: <Widget>[
             RemotePage(scaffoldKey: _scaffoldKey),
-            IpAddressSettings(scaffoldKey: _scaffoldKey),
+            IpAddressSettings(),
             ButtonSettings(),
           ],
         ),

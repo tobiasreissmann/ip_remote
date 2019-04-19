@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+import 'package:ip_remote/gui/utils/AddButtonBig.dart';
+import 'package:ip_remote/gui/utils/customTextField.dart';
 import 'package:vibrate/vibrate.dart';
 
 import 'package:ip_remote/bloc/blocProvider.dart';
@@ -11,108 +13,98 @@ class AddButtonDialog extends StatefulWidget {
 }
 
 class _AddButtonDialogState extends State<AddButtonDialog> {
-  TextEditingController _buttonTextEditingController = TextEditingController();
-  TextEditingController _feedbackTextEditingController = TextEditingController();
-  TextEditingController _pathTextEditingController = TextEditingController();
+  TextEditingController _buttonTextEditingController;
+  TextEditingController _feedbackTextEditingController;
+  TextEditingController _pathTextEditingController;
 
-  FocusNode _buttonFocusNode = FocusNode();
-  FocusNode _feedbackFocusNode = FocusNode();
-  FocusNode _pathFocusNode = FocusNode();
+  FocusNode _buttonFocusNode;
+  FocusNode _feedbackFocusNode;
+  FocusNode _pathFocusNode;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Color _buttonColor = Colors.indigo;
 
   @override
+  void initState() {
+    _buttonTextEditingController = TextEditingController();
+    _feedbackTextEditingController = TextEditingController();
+    _pathTextEditingController = TextEditingController();
+
+    _buttonFocusNode = FocusNode();
+    _feedbackFocusNode = FocusNode();
+    _pathFocusNode = FocusNode();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _buttonTextEditingController.dispose();
+    _feedbackTextEditingController.dispose();
+    _pathTextEditingController.dispose();
+
+    _buttonFocusNode.dispose();
+    _feedbackFocusNode.dispose();
+    _pathFocusNode.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.pop(context),
-      child: Scaffold(
-        key: _scaffoldKey,
-        body: Theme(
-          data: Theme.of(context).copyWith(
-            accentColor: _buttonColor,
-            cursorColor: _buttonColor,
-            textSelectionColor: _buttonColor,
-          ),
-          isMaterialAppTheme: true,
-          child: ListView(
-            children: <Widget>[
-              Padding(padding: const EdgeInsets.all(16)),
-              _LightTextField(
-                label: 'Button Text',
-                textEditingController: _buttonTextEditingController,
-                focusNode: _buttonFocusNode,
-                onFieldSubmitted: () => changeFocus(),
-              ),
-              _LightTextField(
-                label: 'Feedback Message',
-                textEditingController: _feedbackTextEditingController,
-                focusNode: _feedbackFocusNode,
-                onFieldSubmitted: () => changeFocus(),
-              ),
-              _LightTextField(
-                label: 'Request Path',
-                textEditingController: _pathTextEditingController,
-                focusNode: _pathFocusNode,
-                onFieldSubmitted: () => changeFocus(),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: SizedBox(),
-                    ),
-                    Expanded(
-                      flex: 6,
-                      child: GestureDetector(
-                        onLongPress: () => chooseColor(context),
-                        child: ButtonTheme(
-                          height: 50,
-                          child: Hero(
-                            tag: "addButton",
-                            child: ButtonTheme(
-                              height: 60,
-                              minWidth: 90,
-                              child: RaisedButton(
-                                color: _buttonColor,
-                                elevation: 4,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                child: Icon(
-                                  Icons.add,
-                                  size: 36,
-                                  color: ThemeData.estimateBrightnessForColor(_buttonColor) == Brightness.light
-                                      ? Colors.black
-                                      : Colors.white,
-                                ),
-                                onPressed: () => addLightMode(context),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: SizedBox(),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+    updateFocus(context);
+    return Scaffold(
+      key: _scaffoldKey,
+      body: Theme(
+        data: Theme.of(context).copyWith(
+          accentColor: _buttonColor,
+          cursorColor: _buttonColor,
+          textSelectionColor: _buttonColor,
+        ),
+        isMaterialAppTheme: true,
+        child: ListView(
+          children: <Widget>[
+            SizedBox(height: 32),
+            CustomTextField(
+              label: 'Button Text',
+              textEditingController: _buttonTextEditingController,
+              focusNode: _buttonFocusNode,
+              onFieldSubmitted: () => updateFocus(context),
+              number: false,
+            ),
+            CustomTextField(
+              label: 'Feedback Message',
+              textEditingController: _feedbackTextEditingController,
+              focusNode: _feedbackFocusNode,
+              onFieldSubmitted: () => updateFocus(context),
+              number: false,
+            ),
+            CustomTextField(
+              label: 'Request Path',
+              textEditingController: _pathTextEditingController,
+              focusNode: _pathFocusNode,
+              onFieldSubmitted: () => updateFocus(context),
+              number: false,
+            ),
+            AddButtonBig(
+              onPressed: () => addLightMode(context),
+              onLongPress: () => chooseColor(context),
+              buttonColor: _buttonColor,
+              iconColor:
+                  ThemeData.estimateBrightnessForColor(_buttonColor) == Brightness.light ? Colors.black : Colors.white,
+            ),
+          ],
         ),
       ),
     );
   }
 
-  void changeFocus() {
+  void updateFocus(BuildContext context) {
     if (_buttonTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_buttonFocusNode);
     if (_feedbackTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_feedbackFocusNode);
     if (_pathTextEditingController.text.isEmpty) return FocusScope.of(context).requestFocus(_pathFocusNode);
+    return FocusScope.of(context).detach();
   }
 
   void chooseColor(BuildContext context) {
@@ -131,7 +123,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
   }
 
   void addLightMode(BuildContext context) {
-    changeFocus();
+    updateFocus(context);
     if (_buttonTextEditingController.text.isEmpty ||
         _feedbackTextEditingController.text.isEmpty ||
         _pathTextEditingController.text.isEmpty) {
@@ -169,30 +161,5 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
     }
     BlocProvider.of(context).lightModeBloc.addLightMode.add(lightMode);
     Navigator.pop(context);
-  }
-}
-
-class _LightTextField extends StatelessWidget {
-  _LightTextField({this.textEditingController, this.label, this.focusNode, this.onFieldSubmitted});
-  final TextEditingController textEditingController;
-  final FocusNode focusNode;
-  final String label;
-  final VoidCallback onFieldSubmitted;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: TextFormField(
-        keyboardAppearance: Brightness.dark,
-        controller: textEditingController,
-        focusNode: focusNode,
-        onFieldSubmitted: (string) => onFieldSubmitted(),
-        decoration: InputDecoration(
-          labelText: label,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-        ),
-      ),
-    );
   }
 }

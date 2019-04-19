@@ -17,32 +17,32 @@ class LightButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ButtonTheme(
-          minWidth: 200,
-          height: 70,
-          child: RaisedButton(
-            color: lightMode.buttonColor,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            elevation: 4,
-            child: Text(
-              lightMode.button,
-              style: TextStyle(
-                color: ThemeData.estimateBrightnessForColor(lightMode.buttonColor) == Brightness.light
-                    ? Colors.black
-                    : Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.w400,
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        children: <Widget>[
+          ButtonTheme(
+            minWidth: 200,
+            height: 70,
+            child: RaisedButton(
+              color: lightMode.buttonColor,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              elevation: 4,
+              child: Text(
+                lightMode.button,
+                style: TextStyle(
+                  color: ThemeData.estimateBrightnessForColor(lightMode.buttonColor) == Brightness.light
+                      ? Colors.black
+                      : Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
+              onPressed: () => pushMode(lightMode, context),
             ),
-            onPressed: () => pushMode(lightMode, context),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

@@ -12,13 +12,13 @@ class LightModeCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      margin: EdgeInsets.all(4),
+      margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
       child: Padding(
         padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
         child: Row(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 8, right: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Container(
                 width: 20,
                 height: 20,
@@ -29,30 +29,40 @@ class LightModeCardItem extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    lightMode.button,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Padding(padding: const EdgeInsets.all(2)),
-                  Text(
-                    '"${lightMode.feedback}"',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[400],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      lightMode.button,
+                      style: TextStyle(fontSize: 20),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 4),
+                    Text(
+                      '"${lightMode.feedback}"',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Text(
-              "/${lightMode.path}",
-              style: TextStyle(
-                fontFamily: 'OxygenMono',
-                fontSize: 16,
-                color: Colors.indigo[200],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Container(
+                child: Text(
+                  "/${lightMode.path}",
+                  style: TextStyle(
+                    fontFamily: 'OxygenMono',
+                    fontSize: 16,
+                    color: Color.lerp(lightMode.buttonColor, Colors.white, 0.4),
+                  ),
+                ),
+                constraints: BoxConstraints(maxWidth: 120),
               ),
             ),
             IconButton(

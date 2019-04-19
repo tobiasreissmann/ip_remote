@@ -2,20 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/gui/remote/lightButton.dart';
+import 'package:ip_remote/gui/utils/noContentPlaceholder.dart';
 import 'package:ip_remote/models/light_mode.dart';
 
-class RemotePage extends StatefulWidget {
+class RemotePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   RemotePage({Key key, this.scaffoldKey}) : super(key: key);
 
   @override
-  _RemotePageState createState() => _RemotePageState();
-}
-
-class _RemotePageState extends State<RemotePage> with AutomaticKeepAliveClientMixin<RemotePage> {
-  @override
-  bool get wantKeepAlive => true;
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.bottomRight,
@@ -27,10 +22,11 @@ class _RemotePageState extends State<RemotePage> with AutomaticKeepAliveClientMi
                 ? ListView.builder(
                     itemCount: lightModeList.data.isEmpty ? 1 : lightModeList.data.length,
                     itemBuilder: (BuildContext context, int index) {
-                      if (lightModeList.data.isEmpty) return NoButtonsPlaceholder();
+                      if (lightModeList.data.isEmpty)
+                        return NoContentPlaceholder(placeholderText: 'No buttons configured');
                       return LightButton(
                         lightMode: lightModeList.data[index],
-                        scaffoldKey: widget.scaffoldKey,
+                        scaffoldKey: scaffoldKey,
                       );
                     },
                   )
@@ -38,26 +34,6 @@ class _RemotePageState extends State<RemotePage> with AutomaticKeepAliveClientMi
           },
         ),
       ],
-    );
-  }
-}
-
-class NoButtonsPlaceholder extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 40),
-      child: Container(
-        alignment: Alignment.bottomCenter,
-        height: 40,
-        child: Text(
-          'No buttons configured',
-          style: TextStyle(
-            fontStyle: FontStyle.italic,
-            color: Colors.grey,
-          ),
-        ),
-      ),
     );
   }
 }
