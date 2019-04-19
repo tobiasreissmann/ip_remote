@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ip_remote/bloc/blocProvider.dart';
-import 'package:ip_remote/models/ip_address.dart';
+import 'package:ip_remote/models/ipAddress.dart';
 
 class IpAddressCard extends StatelessWidget {
   IpAddressCard({@required this.ipAddress});
@@ -46,8 +46,8 @@ class IpAddressCard extends StatelessWidget {
                     Icons.check_circle,
                   ),
                   color: activeIpAdress.hasData
-                      ? activeIpAdress.data.address == ipAddress.address ? Colors.green : Colors.white
-                      : Colors.white,
+                      ? activeIpAdress.data.address == ipAddress.address ? Colors.green : Colors.grey[300]
+                      : Colors.grey[300],
                   onPressed: () => BlocProvider.of(context).ipAddressBloc.changeActiveIpAddress.add(ipAddress),
                 );
               },

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:ip_remote/bloc/blocProvider.dart';
-import 'package:ip_remote/models/ip_address.dart';
-import 'package:ip_remote/models/light_mode.dart';
+import 'package:ip_remote/models/ipAddress.dart';
+import 'package:ip_remote/models/lightMode.dart';
 
 class LightButton extends StatelessWidget {
   final LightMode lightMode;

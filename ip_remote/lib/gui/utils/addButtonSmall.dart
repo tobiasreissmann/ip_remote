@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomFab extends StatelessWidget {
+class AddButtonSmall extends StatelessWidget {
   final VoidCallback onPressed;
   final String heroTag;
 
-  CustomFab({@required this.onPressed, this.heroTag = 'noTag'});
+  AddButtonSmall({@required this.onPressed, this.heroTag = 'noTag'});
 
   @override
   Widget build(BuildContext context) {

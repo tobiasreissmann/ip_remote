@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
-import 'package:ip_remote/models/light_mode.dart';
+import 'package:ip_remote/models/lightMode.dart';
 import 'package:ip_remote/services/database.dart';
 
 class LightModeBloc {

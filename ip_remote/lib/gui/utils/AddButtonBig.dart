@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class AddButtonBig extends StatelessWidget {
   final VoidCallback onPressed;
   final VoidCallback onLongPress;
+  final String heroTag;
   final Color buttonColor;
   final Color iconColor;
 
-  AddButtonBig({this.onPressed, this.onLongPress, this.buttonColor, this.iconColor});
+  AddButtonBig({this.onPressed, this.onLongPress, this.buttonColor, this.iconColor, this.heroTag});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class AddButtonBig extends StatelessWidget {
             child: ButtonTheme(
               height: 50,
               child: Hero(
-                tag: "addIpAddress",
+                tag: heroTag,
                 child: ButtonTheme(
                   height: 60,
                   minWidth: 90,

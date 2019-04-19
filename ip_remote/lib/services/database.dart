@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ip_remote/models/ip_address.dart';
+import 'package:ip_remote/models/ipAddress.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'package:ip_remote/models/light_mode.dart';
+import 'package:ip_remote/models/lightMode.dart';
 
 Future<Database> get database async {
   String path = join(await getDatabasesPath(), 'ipRemote.db');

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ip_remote/bloc/blocProvider.dart';
-import 'package:ip_remote/models/light_mode.dart';
+import 'package:ip_remote/models/lightMode.dart';
 
 class LightModeCardItem extends StatelessWidget {
   final LightMode lightMode;

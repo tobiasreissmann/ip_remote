@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
 import 'package:ip_remote/services/database.dart';
-import 'package:ip_remote/models/ip_address.dart';
+import 'package:ip_remote/models/ipAddress.dart';
 
 class IpAddressBloc {
   IpAddressBloc() {

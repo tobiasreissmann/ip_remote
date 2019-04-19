@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/gui/utils/AddButtonBig.dart';
 import 'package:ip_remote/gui/utils/customTextField.dart';
-import 'package:ip_remote/models/ip_address.dart';
+import 'package:ip_remote/models/ipAddress.dart';
 
 class AddIpAddressDialog extends StatefulWidget {
   @override
@@ -124,6 +124,7 @@ class _AddIpAddressDialogState extends State<AddIpAddressDialog> {
             onPressed: () => addIpAddress(context),
             buttonColor: Theme.of(context).accentColor,
             iconColor: Colors.white,
+            heroTag: 'addIpAddress',
           ),
         ],
       ),

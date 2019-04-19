@@ -5,7 +5,7 @@ import 'package:ip_remote/gui/utils/customTextField.dart';
 import 'package:vibrate/vibrate.dart';
 
 import 'package:ip_remote/bloc/blocProvider.dart';
-import 'package:ip_remote/models/light_mode.dart';
+import 'package:ip_remote/models/lightMode.dart';
 
 class AddButtonDialog extends StatefulWidget {
   @override
@@ -93,6 +93,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
               buttonColor: _buttonColor,
               iconColor:
                   ThemeData.estimateBrightnessForColor(_buttonColor) == Brightness.light ? Colors.black : Colors.white,
+              heroTag: 'addLightMode',
             ),
           ],
         ),
@@ -108,7 +109,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
   }
 
   void chooseColor(BuildContext context) {
-    Vibrate.feedback(FeedbackType.medium);
+    Vibrate.feedback(FeedbackType.selection);
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
