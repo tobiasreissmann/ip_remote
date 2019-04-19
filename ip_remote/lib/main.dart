@@ -42,9 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text('IP-Remote'),
           bottom: TabBar(
             tabs: <Widget>[
-              Tab(icon: Icon(Icons.lightbulb_outline)),
-              Tab(icon: Icon(Icons.import_export)),
-              Tab(icon: Icon(Icons.settings)),
+              Tab(icon: Icon(Icons.settings_remote)),
+              Tab(icon: Icon(Icons.settings_input_antenna)),
+              Tab(icon: Icon(Icons.edit)),
             ],
           ),
         ),

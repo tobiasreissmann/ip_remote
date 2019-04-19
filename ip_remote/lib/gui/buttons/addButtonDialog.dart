@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+import 'package:vibrate/vibrate.dart';
 
 import 'package:ip_remote/bloc/blocProvider.dart';
 import 'package:ip_remote/models/light_mode.dart';
@@ -28,80 +29,81 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
       onTap: () => Navigator.pop(context),
       child: Scaffold(
         key: _scaffoldKey,
-        body: ListView(
-          children: <Widget>[
-            Padding(padding: const EdgeInsets.all(16)),
-            _LightTextField(
-              label: 'Button Text',
-              textEditingController: _buttonTextEditingController,
-              focusNode: _buttonFocusNode,
-              onFieldSubmitted: () => changeFocus(),
-            ),
-            _LightTextField(
-              label: 'Feedback Message',
-              textEditingController: _feedbackTextEditingController,
-              focusNode: _feedbackFocusNode,
-              onFieldSubmitted: () => changeFocus(),
-            ),
-            _LightTextField(
-              label: 'Request Path',
-              textEditingController: _pathTextEditingController,
-              focusNode: _pathFocusNode,
-              onFieldSubmitted: () => changeFocus(),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    flex: 3,
-                    child: IconButton(
-                      icon: Container(
-                        width: 20,
-                        height: 20,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: _buttonColor,
-                        ),
-                      ),
-                      onPressed: () => chooseColor(context),
+        body: Theme(
+          data: Theme.of(context).copyWith(
+            accentColor: _buttonColor,
+            cursorColor: _buttonColor,
+            textSelectionColor: _buttonColor,
+          ),
+          isMaterialAppTheme: true,
+          child: ListView(
+            children: <Widget>[
+              Padding(padding: const EdgeInsets.all(16)),
+              _LightTextField(
+                label: 'Button Text',
+                textEditingController: _buttonTextEditingController,
+                focusNode: _buttonFocusNode,
+                onFieldSubmitted: () => changeFocus(),
+              ),
+              _LightTextField(
+                label: 'Feedback Message',
+                textEditingController: _feedbackTextEditingController,
+                focusNode: _feedbackFocusNode,
+                onFieldSubmitted: () => changeFocus(),
+              ),
+              _LightTextField(
+                label: 'Request Path',
+                textEditingController: _pathTextEditingController,
+                focusNode: _pathFocusNode,
+                onFieldSubmitted: () => changeFocus(),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
+                      child: SizedBox(),
                     ),
-                  ),
-                  Expanded(
-                    flex: 6,
-                    child: ButtonTheme(
-                      height: 50,
-                      child: Hero(
-                        tag: "addButton",
+                    Expanded(
+                      flex: 6,
+                      child: GestureDetector(
+                        onLongPress: () => chooseColor(context),
                         child: ButtonTheme(
-                          height: 60,
-                          minWidth: 90,
-                          child: RaisedButton(
-                            color: _buttonColor,
-                            elevation: 4,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            child: Icon(
-                              Icons.add,
-                              size: 36,
-                              color: ThemeData.estimateBrightnessForColor(_buttonColor) == Brightness.light
-                                  ? Colors.black
-                                  : Colors.white,
+                          height: 50,
+                          child: Hero(
+                            tag: "addButton",
+                            child: ButtonTheme(
+                              height: 60,
+                              minWidth: 90,
+                              child: RaisedButton(
+                                color: _buttonColor,
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                child: Icon(
+                                  Icons.add,
+                                  size: 36,
+                                  color: ThemeData.estimateBrightnessForColor(_buttonColor) == Brightness.light
+                                      ? Colors.black
+                                      : Colors.white,
+                                ),
+                                onPressed: () => addLightMode(context),
+                              ),
                             ),
-                            onPressed: () => addLightMode(context),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: SizedBox(),
-                  ),
-                ],
+                    Expanded(
+                      flex: 3,
+                      child: SizedBox(),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -114,6 +116,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
   }
 
   void chooseColor(BuildContext context) {
+    Vibrate.feedback(FeedbackType.medium);
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {

@@ -18,27 +18,25 @@ class _ButtonSettingsState extends State<ButtonSettings> with AutomaticKeepAlive
     return Stack(
       alignment: Alignment.bottomRight,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: StreamBuilder(
-            stream: BlocProvider.of(context).lightModeBloc.lightModeListStream,
-            builder: (BuildContext context, AsyncSnapshot<List<LightMode>> lightModeList) {
-              return lightModeList.hasData
-                  ? DragAndDropList(
-                      lightModeList.data.isNotEmpty ? lightModeList.data.length : 1,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (lightModeList.data.isEmpty) return NoButtonsPlaceholder();
-                        return LightModeCardItem(lightMode: lightModeList.data[index]);
-                      },
-                      dragElevation: 9,
-                      canBeDraggedTo: (int oldIndex, int newIndex) => true,
-                      onDragFinish: (int oldIndex, int newIndex) {
-                        BlocProvider.of(context).lightModeBloc.reorderLightModes.add([oldIndex, newIndex]);
-                      },
-                    )
-                  : SizedBox();
-            },
-          ),
+        StreamBuilder(
+          stream: BlocProvider.of(context).lightModeBloc.lightModeListStream,
+          builder: (BuildContext context, AsyncSnapshot<List<LightMode>> lightModeList) {
+            return lightModeList.hasData
+                ? DragAndDropList(
+                    lightModeList.data.length + 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (lightModeList.data.isEmpty) return NoButtonsPlaceholder();
+                      if (index == lightModeList.data.length) return SizedBox(height:60);
+                      return LightModeCardItem(lightMode: lightModeList.data[index]);
+                    },
+                    dragElevation: 4,
+                    canBeDraggedTo: (int oldIndex, int newIndex) => true,
+                    onDragFinish: (int oldIndex, int newIndex) {
+                      BlocProvider.of(context).lightModeBloc.reorderLightModes.add([oldIndex, newIndex]);
+                    },
+                  )
+                : SizedBox();
+          },
         ),
         Padding(
           padding: const EdgeInsets.all(8),
@@ -74,7 +72,7 @@ class NoButtonsPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 40),
       child: Container(
         alignment: Alignment.bottomCenter,
         height: 40,

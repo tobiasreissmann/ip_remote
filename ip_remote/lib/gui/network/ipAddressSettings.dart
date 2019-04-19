@@ -21,22 +21,20 @@ class _IpAddressSettingsState extends State<IpAddressSettings> with AutomaticKee
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: StreamBuilder(
-            stream: BlocProvider.of(context).ipAddressBloc.ipAddressListStream,
-            builder: (BuildContext context, AsyncSnapshot<List<IpAddress>> ipAddressList) {
-              return ipAddressList.hasData
-                  ? ListView.builder(
-                      itemCount: ipAddressList.data.isNotEmpty ? ipAddressList.data.length : 1,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (ipAddressList.data.isEmpty) return NoIpAddressPlaceholder();
-                        return IpAddressCard(ipAddress: ipAddressList.data[index]);
-                      },
-                    )
-                  : SizedBox();
-            },
-          ),
+        StreamBuilder(
+          stream: BlocProvider.of(context).ipAddressBloc.ipAddressListStream,
+          builder: (BuildContext context, AsyncSnapshot<List<IpAddress>> ipAddressList) {
+            return ipAddressList.hasData
+                ? ListView.builder(
+                    itemCount: ipAddressList.data.length + 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (ipAddressList.data.isEmpty) return NoIpAddressPlaceholder();
+                      if (index == ipAddressList.data.length) return SizedBox(height: 60);
+                      return IpAddressCard(ipAddress: ipAddressList.data[index]);
+                    },
+                  )
+                : SizedBox();
+          },
         ),
         Padding(
           padding: const EdgeInsets.all(8),
@@ -72,7 +70,7 @@ class NoIpAddressPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 40),
       child: Container(
         alignment: Alignment.bottomCenter,
         height: 40,

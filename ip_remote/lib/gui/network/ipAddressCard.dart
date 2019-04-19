@@ -11,6 +11,7 @@ class IpAddressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      margin: const EdgeInsets.all(4),
       child: Padding(
         padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
         child: Row(

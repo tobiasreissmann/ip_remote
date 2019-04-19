@@ -20,25 +20,22 @@ class _RemotePageState extends State<RemotePage> with AutomaticKeepAliveClientMi
     return Stack(
       alignment: Alignment.bottomRight,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(14),
-          child: StreamBuilder<List<LightMode>>(
-            stream: BlocProvider.of(context).lightModeBloc.lightModeListStream,
-            builder: (BuildContext context, AsyncSnapshot lightModeList) {
-              return lightModeList.hasData
-                  ? ListView.builder(
-                      itemCount: lightModeList.data.isNotEmpty ? lightModeList.data.length : 1,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (lightModeList.data.isEmpty) return NoButtonsPlaceholder();
-                        return LightButton(
-                          lightMode: lightModeList.data[index],
-                          scaffoldKey: widget.scaffoldKey,
-                        );
-                      },
-                    )
-                  : SizedBox();
-            },
-          ),
+        StreamBuilder<List<LightMode>>(
+          stream: BlocProvider.of(context).lightModeBloc.lightModeListStream,
+          builder: (BuildContext context, AsyncSnapshot lightModeList) {
+            return lightModeList.hasData
+                ? ListView.builder(
+                    itemCount: lightModeList.data.isEmpty ? 1 : lightModeList.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (lightModeList.data.isEmpty) return NoButtonsPlaceholder();
+                      return LightButton(
+                        lightMode: lightModeList.data[index],
+                        scaffoldKey: widget.scaffoldKey,
+                      );
+                    },
+                  )
+                : SizedBox();
+          },
         ),
       ],
     );
@@ -48,14 +45,17 @@ class _RemotePageState extends State<RemotePage> with AutomaticKeepAliveClientMi
 class NoButtonsPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      height: 50,
-      child: Text(
-        'No buttons configured',
-        style: TextStyle(
-          fontStyle: FontStyle.italic,
-          color: Colors.grey,
+    return Padding(
+      padding: const EdgeInsets.only(top: 40),
+      child: Container(
+        alignment: Alignment.bottomCenter,
+        height: 40,
+        child: Text(
+          'No buttons configured',
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            color: Colors.grey,
+          ),
         ),
       ),
     );
