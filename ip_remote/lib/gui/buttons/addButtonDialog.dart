@@ -61,7 +61,6 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
           cursorColor: _buttonColor,
           textSelectionColor: _buttonColor,
         ),
-        isMaterialAppTheme: true,
         child: GestureDetector(
           onTap: () => Navigator.pop(context),
           child: ListView(
@@ -72,7 +71,6 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
                 textEditingController: _buttonTextEditingController,
                 focusNode: _buttonFocusNode,
                 onFieldSubmitted: () => updateFocus(context),
-                number: false,
                 autofocus: true,
               ),
               CustomTextField(
@@ -113,7 +111,7 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
   }
 
   void chooseColor(BuildContext context) {
-    Vibrate.feedback(FeedbackType.selection);
+    Vibrate.feedback(FeedbackType.medium);
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {

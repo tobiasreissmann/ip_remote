@@ -12,7 +12,6 @@ class IpAddressSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        alignment: Alignment.bottomCenter,
         children: <Widget>[
           StreamBuilder(
             stream: BlocProvider.of(context).ipAddressBloc.ipAddressListStream,

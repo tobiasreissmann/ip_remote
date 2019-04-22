@@ -8,18 +8,10 @@ import 'package:ip_remote/gui/utils/addButtonSmall.dart';
 import 'package:ip_remote/gui/utils/noContentPlaceholder.dart';
 import 'package:ip_remote/models/lightMode.dart';
 
-class ButtonSettings extends StatefulWidget {
-  @override
-  _ButtonSettingsState createState() => _ButtonSettingsState();
-}
-
-class _ButtonSettingsState extends State<ButtonSettings> with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
+class ButtonSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        alignment: Alignment.bottomRight,
         children: <Widget>[
           StreamBuilder(
             stream: BlocProvider.of(context).lightModeBloc.lightModeListStream,

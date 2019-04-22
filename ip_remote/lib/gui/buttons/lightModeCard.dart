@@ -52,7 +52,7 @@ class LightModeCardItem extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.only(left: 8),
               child: Container(
                 child: Text(
                   "/${lightMode.path}",
