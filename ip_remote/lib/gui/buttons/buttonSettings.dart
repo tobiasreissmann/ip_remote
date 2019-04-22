@@ -8,8 +8,14 @@ import 'package:ip_remote/gui/utils/addButtonSmall.dart';
 import 'package:ip_remote/gui/utils/noContentPlaceholder.dart';
 import 'package:ip_remote/models/lightMode.dart';
 
-class ButtonSettings extends StatelessWidget {
+class ButtonSettings extends StatefulWidget {
   @override
+  _ButtonSettingsState createState() => _ButtonSettingsState();
+}
+
+class _ButtonSettingsState extends State<ButtonSettings> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -24,12 +30,13 @@ class ButtonSettings extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         if (lightModeList.data.isEmpty)
                           return NoContentPlaceholder(placeholderText: 'Add buttons here');
-                        if (index == lightModeList.data.length) return SizedBox(height: 60);
+                        if (index == lightModeList.data.length) return SizedBox(height: 70);
                         return LightModeCardItem(lightMode: lightModeList.data[index]);
                       },
                       dragElevation: 4,
                       canBeDraggedTo: (int oldIndex, int newIndex) => true,
                       onDragFinish: (int oldIndex, int newIndex) {
+                        if (newIndex >= lightModeList.data.length) newIndex = lightModeList.data.length - 1;
                         BlocProvider.of(context).lightModeBloc.reorderLightModes.add([oldIndex, newIndex]);
                       },
                     )

@@ -6,12 +6,12 @@ import 'package:ip_remote/gui/utils/noContentPlaceholder.dart';
 import 'package:ip_remote/models/lightMode.dart';
 
 class RemotePage extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
+      key: _scaffoldKey,
       body: Stack(
         alignment: Alignment.bottomRight,
         children: <Widget>[
@@ -26,7 +26,7 @@ class RemotePage extends StatelessWidget {
                           return NoContentPlaceholder(placeholderText: 'No buttons configured');
                         return LightButton(
                           lightMode: lightModeList.data[index],
-                          scaffoldKey: scaffoldKey,
+                          scaffoldKey: _scaffoldKey,
                         );
                       },
                     )

@@ -23,7 +23,7 @@ class IpAddressSettings extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         if (ipAddressList.data.isEmpty)
                           return NoContentPlaceholder(placeholderText: 'Add IP-Addresses here');
-                        if (index == ipAddressList.data.length) return SizedBox(height: 60);
+                        if (index == ipAddressList.data.length) return SizedBox(height: 70);
                         return IpAddressCard(ipAddress: ipAddressList.data[index]);
                       },
                     )

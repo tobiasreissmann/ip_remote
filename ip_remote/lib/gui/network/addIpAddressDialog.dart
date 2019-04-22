@@ -61,72 +61,74 @@ class _AddIpAddressDialogState extends State<AddIpAddressDialog> {
 
   @override
   Widget build(BuildContext context) {
-    updateFocus(context);
     return Scaffold(
       key: _scaffoldKey,
-      body: ListView(
-        children: <Widget>[
-          SizedBox(height: 32),
-          CustomTextField(
-            focusNode: _descriptionFocusNode,
-            textEditingController: _descriptonTextEditingController,
-            onFieldSubmitted: () => updateFocus(context),
-            label: 'Description text',
-            number: false,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: CustomTextField(
-                    focusNode: _ipAFocusNode,
-                    textEditingController: _ipATextEditingController,
-                    onFieldSubmitted: () => updateFocus(context),
-                    label: '',
-                    number: true,
-                  ),
-                ),
-                Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
-                Expanded(
-                  child: CustomTextField(
-                    focusNode: _ipBFocusNode,
-                    textEditingController: _ipBTextEditingController,
-                    onFieldSubmitted: () => updateFocus(context),
-                    label: '',
-                    number: true,
-                  ),
-                ),
-                Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
-                Expanded(
-                  child: CustomTextField(
-                    focusNode: _ipCFocusNode,
-                    textEditingController: _ipCTextEditingController,
-                    onFieldSubmitted: () => updateFocus(context),
-                    label: '',
-                    number: true,
-                  ),
-                ),
-                Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
-                Expanded(
-                  child: CustomTextField(
-                    focusNode: _ipDFocusNode,
-                    textEditingController: _ipDTextEditingController,
-                    onFieldSubmitted: () => updateFocus(context),
-                    label: '',
-                    number: true,
-                  ),
-                ),
-              ],
+      body: GestureDetector(
+        onTap: () => Navigator.pop(context),
+        child: ListView(
+          children: <Widget>[
+            SizedBox(height: 32),
+            CustomTextField(
+              focusNode: _descriptionFocusNode,
+              textEditingController: _descriptonTextEditingController,
+              onFieldSubmitted: () => updateFocus(context),
+              label: 'Description text',
+              autofocus: true,
             ),
-          ),
-          AddButtonBig(
-            onPressed: () => addIpAddress(context),
-            buttonColor: Theme.of(context).accentColor,
-            iconColor: Colors.white,
-            heroTag: 'addIpAddress',
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: CustomTextField(
+                      focusNode: _ipAFocusNode,
+                      textEditingController: _ipATextEditingController,
+                      onFieldSubmitted: () => updateFocus(context),
+                      label: '',
+                      number: true,
+                    ),
+                  ),
+                  Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Expanded(
+                    child: CustomTextField(
+                      focusNode: _ipBFocusNode,
+                      textEditingController: _ipBTextEditingController,
+                      onFieldSubmitted: () => updateFocus(context),
+                      label: '',
+                      number: true,
+                    ),
+                  ),
+                  Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Expanded(
+                    child: CustomTextField(
+                      focusNode: _ipCFocusNode,
+                      textEditingController: _ipCTextEditingController,
+                      onFieldSubmitted: () => updateFocus(context),
+                      label: '',
+                      number: true,
+                    ),
+                  ),
+                  Text('.', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Expanded(
+                    child: CustomTextField(
+                      focusNode: _ipDFocusNode,
+                      textEditingController: _ipDTextEditingController,
+                      onFieldSubmitted: () => updateFocus(context),
+                      label: '',
+                      number: true,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            AddButtonBig(
+              onPressed: () => addIpAddress(context),
+              buttonColor: Theme.of(context).accentColor,
+              iconColor: Colors.white,
+              heroTag: 'addIpAddress',
+            ),
+          ],
+        ),
       ),
     );
   }

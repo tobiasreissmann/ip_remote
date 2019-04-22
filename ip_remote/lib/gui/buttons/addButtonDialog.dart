@@ -53,7 +53,6 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
 
   @override
   Widget build(BuildContext context) {
-    updateFocus(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Theme(
@@ -63,39 +62,44 @@ class _AddButtonDialogState extends State<AddButtonDialog> {
           textSelectionColor: _buttonColor,
         ),
         isMaterialAppTheme: true,
-        child: ListView(
-          children: <Widget>[
-            SizedBox(height: 32),
-            CustomTextField(
-              label: 'Button Text',
-              textEditingController: _buttonTextEditingController,
-              focusNode: _buttonFocusNode,
-              onFieldSubmitted: () => updateFocus(context),
-              number: false,
-            ),
-            CustomTextField(
-              label: 'Feedback Message',
-              textEditingController: _feedbackTextEditingController,
-              focusNode: _feedbackFocusNode,
-              onFieldSubmitted: () => updateFocus(context),
-              number: false,
-            ),
-            CustomTextField(
-              label: 'Request Path',
-              textEditingController: _pathTextEditingController,
-              focusNode: _pathFocusNode,
-              onFieldSubmitted: () => updateFocus(context),
-              number: false,
-            ),
-            AddButtonBig(
-              onPressed: () => addLightMode(context),
-              onLongPress: () => chooseColor(context),
-              buttonColor: _buttonColor,
-              iconColor:
-                  ThemeData.estimateBrightnessForColor(_buttonColor) == Brightness.light ? Colors.black : Colors.white,
-              heroTag: 'addLightMode',
-            ),
-          ],
+        child: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: ListView(
+            children: <Widget>[
+              SizedBox(height: 32),
+              CustomTextField(
+                label: 'Button Text',
+                textEditingController: _buttonTextEditingController,
+                focusNode: _buttonFocusNode,
+                onFieldSubmitted: () => updateFocus(context),
+                number: false,
+                autofocus: true,
+              ),
+              CustomTextField(
+                label: 'Feedback Message',
+                textEditingController: _feedbackTextEditingController,
+                focusNode: _feedbackFocusNode,
+                onFieldSubmitted: () => updateFocus(context),
+                number: false,
+              ),
+              CustomTextField(
+                label: 'Request Path',
+                textEditingController: _pathTextEditingController,
+                focusNode: _pathFocusNode,
+                onFieldSubmitted: () => updateFocus(context),
+                number: false,
+              ),
+              AddButtonBig(
+                onPressed: () => addLightMode(context),
+                onLongPress: () => chooseColor(context),
+                buttonColor: _buttonColor,
+                iconColor: ThemeData.estimateBrightnessForColor(_buttonColor) == Brightness.light
+                    ? Colors.black
+                    : Colors.white,
+                heroTag: 'addLightMode',
+              ),
+            ],
+          ),
         ),
       ),
     );

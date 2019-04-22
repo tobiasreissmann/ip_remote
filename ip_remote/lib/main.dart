@@ -39,6 +39,24 @@ class _MyHomePageState extends State<MyHomePage> {
       initialIndex: 0,
       child: Scaffold(
         key: _scaffoldKey,
+        appBar: AppBar(
+          title: Text(
+            'IP-Remote',
+            style: TextStyle(color: Colors.grey[300]),
+          ),
+          bottom: TabBar(
+            tabs: <Widget>[
+              Tab(icon: Icon(Icons.settings_remote)),
+              Tab(icon: Icon(Icons.settings_input_antenna)),
+              Tab(icon: Icon(Icons.edit)),
+            ],
+            labelColor: Theme.of(context).accentColor,
+            unselectedLabelColor: Colors.grey[300],
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorColor: Theme.of(context).accentColor,
+            dragStartBehavior: DragStartBehavior.down,
+          ),
+        ),
         body: TabBarView(
           dragStartBehavior: DragStartBehavior.down,
           children: <Widget>[
@@ -47,19 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ButtonSettings(),
           ],
         ),
-        bottomNavigationBar: TabBar(
-          tabs: <Widget>[
-            Tab(icon: Icon(Icons.settings_remote)),
-            Tab(icon: Icon(Icons.settings_input_antenna)),
-            Tab(icon: Icon(Icons.edit)),
-          ],
-          labelColor: Theme.of(context).accentColor,
-          unselectedLabelColor: Colors.grey[300],
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorColor: Theme.of(context).accentColor,
-          dragStartBehavior: DragStartBehavior.down,
-        ),
-        backgroundColor: Colors.grey[900],
       ),
     );
   }
